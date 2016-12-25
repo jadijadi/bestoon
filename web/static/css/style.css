@@ -1,0 +1,170 @@
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+@import url('https://fontup.ir/css?fonts=Samim:400');
+
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+[class*="fontawesome-"]:before {
+  font-family: 'fontawesome', sans-serif;
+}
+
+body  {
+  font-family: 'Samim', 'Droid Arabic Naskh', ubuntu, tahoma, sans-serif;
+  direction: rtl;
+  background: #F2F2E8;
+}
+
+.panel-default>.panel-heading {
+  background: #f5f5f5;
+}
+
+li {
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4,h5, h6 {
+  font-family: 'Samim', 'Droid Arabic Naskh', ubuntu, tahoma, sans-serif;
+}
+
+
+
+.navbar-nav {
+  float: right;
+}
+
+.topleftlogo {
+    color: lightblue;
+    font-size: 14pt;
+}
+
+.linkdone {
+}
+
+.content {
+  direction: rtl;
+  font-family: 'Samim', 'Droid Arabic Naskh', ubuntu, tahoma, sans-serif;
+}
+
+.taskdone {
+}
+
+.todoitem {
+
+}
+
+
+.buttonmoresub {
+  opacity: 0.65;
+}
+.tickicon {
+  opacity: 0.65;
+}
+
+.todoli {
+  margin-bottom: 12pt;
+}
+
+.footer {
+    margin-top: 100px;
+    background: #FCF8E3;
+    color: #555;
+    text-align: center;
+    padding: 20px;
+    -webkit-box-shadow: 1px 1px 2px rgba(51,51,51,0.2), -1px -1px 2px rgba(51,51,51,0.2);
+    box-shadow: 1px 1px 2px rgba(51,51,51,0.2), -1px -1px 2px rgba(51,51,51,0.2);
+}
+
+.padd-5 {
+  padding: 5px;
+}
+
+
+/*
+ * Start Bootstrap - Logo Nav (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+}
+
+.navbar-inverse {
+    background: #3c3c3c;
+}
+
+
+
+@media(min-width:768px) {
+    body {
+        padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    }
+
+    .navbar-fixed-top .navbar-brand {
+        padding: 15px 0;
+    }
+}
+
+.subtaskinput {
+    width: 67%;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-right-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-right-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-right-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-right-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+.bs-callout-danger {
+    border-right-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-right-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-right-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+
+.navbar-brand img {
+	margin-top: -5pt;
+	width: 70pt;
+}

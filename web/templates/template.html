@@ -1,0 +1,120 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html  class="no-js" lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <title>بستون، بدون پول کجاست</title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/bootstrap-rtl.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"  crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css" >
+    <!-- Latest compiled and minified CSS -->
+
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/style.css" >
+
+  </head>
+
+  <body>
+
+
+
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top rtl" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header navbar-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="http://todoer.ir">
+			                <img src="/static/todoer.png" >
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-left">
+                    {% if user.is_authenticated %}
+                    <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
+                    <li><a href="/accounts/logout">خروج</a></li>
+                    {% else %}
+                    <li><a href="/accounts/login">ورود</a></li>
+                    <li><a href="/accounts/register">ثبت نام</a></li>
+                    <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
+                    {% endif %}
+                  </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+<h2>بستون</h2>
+                  {% block content %}
+
+
+
+                  {% endblock %}
+
+        </div>
+
+        <footer class="footer">
+          <div class="">
+            <div class="">
+
+              <p>
+                <strong>تودوئر</strong> یک پروژهٔ آزاد و متن‌باز است.<br>
+			<a href="https://github.com/jadijadi/todoer">مخرن گیت‌هاب پروژه</a> |
+			<a href="http://gapper.ir/channel/todoer">گزارش مشکلات و پیشنهادها</a>
+              </p>
+              <p>
+                <a href="/static/todoer_release.apk">
+                  دریافت اپ اندروید تودوئر
+                </a>
+            </div>
+          </div>
+        </footer>
+        <!-- /.container -->
+
+        <!-- jQuery -->
+        <script src="/static/js/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/static/js/bootstrap.min.js"></script>
+
+
+        <script src="/static/js/awesome.js"></script>
+
+
+        {% block footer %}
+
+        {% endblock %}
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-86661525-2', 'auto');
+          ga('send', 'pageview');
+        </script>
+      </body>
+    </html>

@@ -1,0 +1,99 @@
+{% extends "template.html"%}
+{% load staticfiles %}
+
+{% block content %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<div class="row">
+    <div class="col-lg-12">
+
+{% if form.errors %}
+<p>
+نام کاربری یا پسورد شما درست نبود.
+</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>
+برای دیدن این صفحه باید لاگین کنید
+    </p>
+    {% endif %}
+{% endif %}
+<p>
+  خوشحالم که تصمیم گرفتین عضو سیستم تودوئر بشین. در واقع خوشحالم که علاقمند هستین کارهاتون تیک بخوره. توی فرم پایین مشخصات رو وارد کنید و زندگی شروع می شه!
+</p>
+<p>
+  البته این فعلا یک سیستم شخصی است و این یک نکته مثبته: من این رو برای استفاده خودم توسعه می دم و در نتیجه دائما باید برای یک استفاده کننده واقعی بهینه بشه. اگر شما
+  هم گپ یا پیشنهادی درموردش داشتین
+  <a href="http://gapper.ir/channel/bestoon">
+    اینجا بنویسین و خونده خواهد شد
+  </a>
+</p>
+
+  {% if message %}
+  <div class="bs-callout bs-callout-info">
+    <h5>{{ message }}</h5>
+  </div>
+  {% endif %}
+
+
+
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">ثبت نام</h3>
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" method="POST" action="/accounts/register/">
+            {% csrf_token %}
+            <input type="hidden" name="requestcode" value="True" />
+            <input type="hidden" name="next" value="{{ next }}" />
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label" >نام کاربری</label>
+              <div class="col-sm-10">
+                <input type="text" name="username" class="form-control" placeholder="حداقل سه کاراکتر" required pattern=".{3,}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">ایمیل شما</label>
+              <div class="col-sm-10">
+                <input type="email" name="email" class="form-control"  placeholder="لینک تایید ساخت اکانت به این آدرس فرستاده می‌شود" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label" >کلمه عبور</label>
+              <div class="col-sm-10">
+                <input type="password" name="password" class="form-control"  placeholder="حداقل پنج کاراکتر" required pattern=".{5,}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label" >ربات نیستید؟</label>
+              <div class="col-sm-10">
+                <div class="g-recaptcha" data-sitekey="6LeVvA8UAAAAALjoTeoU5_n7NDabQcNdZiq5RaQV"></div>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">درخواست ایمیل فعال‌سازی اکانت</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+{% endblock %}
