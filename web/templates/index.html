@@ -8,61 +8,35 @@
   <div class="col-md-12">
     <div class="alert alert-info" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <a href="/static/todoer_release.apk">
-          اپلیکیشن اندروید تودوئر را از اینجا دانلود کنید
+      <a href="http://jadi.net/tags/بستون">
+این برنامه شدیدا در حال توسعه است. اینجا را ببینید
       </a>
     </div>
   </div>
 </div>
 
-<div class="well well-sm">
-  <h3>چه کاری در پیشه؟</h3>
-  <form method="post" action="/task/add/"  >
-    <div class="row">
-      <div class="col-md-10 col-sm-8">
-        <input type="hidden" value="" name="mothertask" >
-        {% csrf_token %}
-        <input type="text" name="tasktext" placeholder="کوچیک، مشخص و قابل اجرا..." class="form-control">
-      </div>
-      <div class="col-md-2 col-sm-4">
-        <button type="submit"    class="btn btn-block btn-primary ">اضافه کردن</button>
-        <input type="hidden" name="save" value="true"  />
-      </div>
-    </div>
-  </form>
-</div>
-
-<hr >
 
 <div class="row">
 
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">کارهای پیش رو</h3>
+          <h3 class="panel-title">بستون</h3>
         </div>
         <div class="panel-body">
-          <ul class="list-unstyled" style="padding-right: 0px;">
-          {% for task in tasks %}
-               <li class=todoli >
-                 <form action="/task/add/" method="POST" class="form-inline" >
-                 <a class="todoitem " href="/task/{{ task.id }}/done/"><i class="fa fa-square-o fa-2x tickicon" aria-hidden="true"></i></a> {{ task.text }}
-                 <span onclick="showelement("subtask-{{task.id}}")"></span>
-                   {% csrf_token %}
-                   <input name="tasktext" class="subtask-{{task.id}} subtaskinput form-control" placeholder="اضافه کردن زیرتسک" size=12>
-                   <span class="btn-{{task.id}} btn-xs btn btn-info buttonmoresub" onclick='showsubtaskinput("{{task.id}}"); return false;'>+</span>
-                   <input type="hidden" value="{{task.id}}" name="mothertask" >
-                 </form></small></h4>
-                 <ul class="list-unstyled">
-                   {% for subtask in task.subtasks %}
-                   <li >
-                    <a style="" class="todosubitem " href="/task/{{ subtask.id }}/done/"><i class="fa fa-square-o" aria-hidden="true"></i></a> {{subtask.text}}
-                  </li>
-                   {% endfor %}
-                </ul>
-               </li>
-          {% endfor %}
-          </ul>
+
+<p>
+  بستون یک پروژه اش که قدم به قدم توش سعی می کنیم سیستمی درست کنیم که می شه خرج و دخل رو باهاش نگه داشت.
+  فعلا در ابتدای راهیم و برای استفاده ازش عملا باید یک گیک علاقمند باشنی.
+</p>
+<p>
+برای باز کردن اکانت
+<a href=/accounts/register/>به صفحه رجیستر شدن برین</a>
+و برای اطلاعات بیشتر مراجعه بکنین به
+<a href="http://github.com/jadijadi/bestoon/">
+  گیت هاب پروژه.
+</a>
+</p>
         </div>
       </div>
 
@@ -75,22 +49,6 @@
 
 
 
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">کارهای انجام شده</h3>
-      </div>
-      <div class="panel-body">
-        <ul class="list-unstyled"  style="padding-right: 0px;">
-        {% for task in tasksDone %}
-          <li >
-            <a type="button" href="/task/{{ task.id }}/redo/"><span class="fontawesome-undo padd-5"></span></a> <a type="button" href="/task/{{ task.id }}/delete/"><span class="fontawesome-trash text-danger padd-5"></span></a> {{ task.text }}
-         </li>
-        {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock %}
 
