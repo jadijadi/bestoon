@@ -1,2 +1,4 @@
 Django==1.10.4
 pkg-resources==0.0.0
+python-postmark==0.4.10
+requests==2.12.4
