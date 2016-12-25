@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^submit/income/$', views.submit_income, name='submit_income'),
     url(r'^accounts/register/$', views.register, name='register'),
     url(r'^$', views.index, name='index'),
+#    url(r'^jet/', include('jet.urls', 'jet')),
 ]
