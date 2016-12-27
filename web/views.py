@@ -13,6 +13,7 @@ from web.models import User, Token, Expense, Income, Passwordresetcodes
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from postmark import PMMail
+from django.db.models import Sum, Count
 
 
 # Create your views here.
@@ -95,6 +96,20 @@ def register(request):
         context = {'message': ''}
         return render(request, 'register.html', context)
 
+@csrf_exempt
+def generalstat(request):
+    #TODO: should get a valid duration (from - to), if not, use 1 month
+    #TODO: is the token valid?
+    this_token = request.POST['token']
+    this_user = User.objects.filter(token__token = this_token).get()
+    income = Income.objects.filter(user = this_user).aggregate(Count('amount'), Sum('amount'))
+    expense = Expense.objects.filter(user = this_user).aggregate(Count('amount'), Sum('amount'))
+    context = {}
+    context['expense'] = expense
+    context['income'] = income
+    return JsonResponse( context, encoder=JSONEncoder)
+
+
 def index(request):
     context = {}
     return render(request, 'index.html', context)
@@ -104,6 +119,7 @@ def submit_income(request):
     """ submit an income """
 
     #TODO; validate data. user might be fake. token might be fake, amount might be...
+    #TODO: is the token valid?
     this_token = request.POST['token']
     this_user = User.objects.filter(token__token = this_token).get()
     if 'date' not in request.POST:
@@ -120,6 +136,7 @@ def submit_expense(request):
     """ submit an expense """
 
     #TODO; validate data. user might be fake. token might be fake, amount might be...
+    #TODO: is the token valid?
     this_token = request.POST['token']
     this_user = User.objects.filter(token__token = this_token).get()
     if 'date' not in request.POST:
