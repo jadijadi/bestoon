@@ -69,7 +69,7 @@ def register(request):
                                  subject = "فعالسازی اکاننت بستون",
                                  sender = "jadi@jadi.net",
                                  to = email,
-                                 text_body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?email={}&code={}".format(request.build_absolute_uri('/accounts/register/'), email, code),
+                                 text_body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(request.build_absolute_uri('/accounts/register/'), code),
                                  tag = "account request")
                 message.send()
                 context = {'message': 'ایمیلی حاوی لینک فعال سازی اکانت به شما فرستاده شده، لطفا پس از چک کردن ایمیل، روی لینک کلیک کنید.'}
@@ -79,11 +79,10 @@ def register(request):
             #TODO: keep the form data
             return render(request, 'register.html', context)
     elif request.GET.has_key('code'): # user clicked on code
-        email = request.GET['email']
         code = request.GET['code']
         if Passwordresetcodes.objects.filter(code=code).exists(): #if code is in temporary db, read the data and create the user
             new_temp_user = Passwordresetcodes.objects.get(code=code)
-            newuser = User.objects.create(username=new_temp_user.username, password=new_temp_user.password, email=email)
+            newuser = User.objects.create(username=new_temp_user.username, password=new_temp_user.password, email=new_temp_user.email)
             this_token = random_str(48)
             token = Token.objects.create(user=newuser, token=this_token)
             Passwordresetcodes.objects.filter(code=code).delete() #delete the temporary activation code from db
