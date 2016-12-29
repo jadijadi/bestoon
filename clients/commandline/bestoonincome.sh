@@ -15,4 +15,4 @@ Usage:
     exit 1       
 fi
 
-curl --data "token=$TOKEN&amount=$AMOOUNT&text=$TEXT" $BASE_URL/submit/income/
+curl --data "token=$TOKEN&amount=$AMOUNT&text=$TEXT" $BASE_URL/submit/income/
