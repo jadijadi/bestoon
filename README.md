@@ -21,5 +21,11 @@ To run Bestoon in development mode; Just use steps bellow:
 4. Run `Bestoon` using `python manage.py runserver`
 5. Go to [http://localhost:8000](http://localhost:8000) to see your Bestoon version.
 
+## Run tests
+
+To run tests in Bestoon simply use `python manage.py test`.
+
+If you want more verbosity you can use `-v` option with `0, 1, 2, or 3.`; e.g. `python manage.py test -v2`
+
 ## TODO
 [] No need for a login page after registration

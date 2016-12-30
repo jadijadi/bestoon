@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^submit/income/?$', views.submit_income, name='submit_income'),
     url(r'^q/generalstat/?$', views.generalstat, name='generalstat'),
     url(r'^accounts/register/?$', views.register, name='register'),
+    url(r'^accounts/whoami/?$', views.whoami, name='whoami'),
     url(r'^$', views.index, name='index'),
 ]
