@@ -99,6 +99,8 @@ def register(request):
 def generalstat(request):
     #TODO: should get a valid duration (from - to), if not, use 1 month
     #TODO: is the token valid?
+    print request.GET
+    print request.POST
     this_token = request.POST['token']
     this_user = User.objects.filter(token__token = this_token).get()
     income = Income.objects.filter(user = this_user).aggregate(Count('amount'), Sum('amount'))

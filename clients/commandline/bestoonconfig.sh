@@ -1,4 +1,4 @@
 #!/bin/bash
 
-TOKEN=73242975409812749874adfadfdaf
+TOKEN=test
 BASE_URL=http://bestoon.ir
