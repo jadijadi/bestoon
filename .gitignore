@@ -1,11 +1,7 @@
-db.sqlite3
-*.egg-info
-*.pot
-*.py[co]
-.tox/
-__pycache__
+# project
 MANIFEST
 dist/
+.tox/
 docs/_build/
 docs/locale/
 node_modules/
@@ -13,6 +9,15 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
-*.pyc
 web/migrations/*
+db.sqlite3
 
+# python
+*.egg-info
+__pycache__
+*.pyc
+*.pot
+*.py[co]
+
+# Editors
+*.sw[po]
