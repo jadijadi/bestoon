@@ -1,0 +1,36 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>بستون</h2>
+    <p>
+<!--
+TODO:
+[ ] local storage
+[ ] login page: post user / pass to server and save localstorage on client stateProvider
+[ ] login page if there is no token in local storage
+[ ] clear token and go to login page if token is not valid
+[ ] use localstorage when in need of token
+-->
+
+    <a href="http://bestoon.ir" target="_blank">بستون</a>.
+    </p>
+    <p>
+      <div class="row header">
+          <div class="col"></div>
+          <div class="col">دفعات</div>
+          <div class="col">جمع</div>
+      </div>
+      <div class="row header">
+          <div class="col">درآمد</div>
+          <div class="col">{{generalstat.income.amount__count}}</div>
+          <div class="col">{{generalstat.income.amount__sum}}</div>
+      </div>
+      <div class="row header">
+          <div class="col">هزینه‌</div>
+          <div class="col">{{generalstat.expense.amount__count}}</div>
+          <div class="col">{{generalstat.expense.amount__sum}}</div>
+      </div>
+
+    </p>
+
+  </ion-content>
+</ion-view>
