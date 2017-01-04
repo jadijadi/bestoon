@@ -14,6 +14,7 @@ from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from postmark import PMMail
 from django.db.models import Sum, Count
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -102,7 +103,7 @@ def generalstat(request):
     print request.GET
     print request.POST
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token = this_token).get()
+    this_user = get_list_or_404(User,(token__token = this_token))
     income = Income.objects.filter(user = this_user).aggregate(Count('amount'), Sum('amount'))
     expense = Expense.objects.filter(user = this_user).aggregate(Count('amount'), Sum('amount'))
     context = {}
@@ -122,7 +123,7 @@ def submit_income(request):
     #TODO; validate data. user might be fake. token might be fake, amount might be...
     #TODO: is the token valid?
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token = this_token).get()
+    this_user = get_list_or_404(User,(token__token = this_token))
     if 'date' not in request.POST:
         date = datetime.now()
     Income.objects.create(user = this_user, amount=request.POST['amount'],
@@ -139,7 +140,7 @@ def submit_expense(request):
     #TODO; validate data. user might be fake. token might be fake, amount might be...
     #TODO: is the token valid?
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token = this_token).get()
+    this_user = get_list_or_404(User,(token__token = this_token))
     if 'date' not in request.POST:
         date = datetime.now()
     Expense.objects.create(user = this_user, amount=request.POST['amount'],
