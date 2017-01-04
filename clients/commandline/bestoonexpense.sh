@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 source "$(dirname $0)"/bestoonconfig.sh
 
 print_usage()
@@ -13,8 +12,9 @@ print_usage()
 AMOUNT=$1
 shift
 TEXT=$*
-if [ -z "$TEXT" ] ; then
-  print_usage
+if [ -z "$TEXT" ]; then
+    print_usage
+    exit 1
 fi
 
 curl --data "token=$TOKEN&amount=$AMOUNT&text=$TEXT" $BASE_URL/submit/expense/
