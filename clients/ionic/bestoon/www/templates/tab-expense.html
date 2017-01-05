@@ -2,15 +2,23 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="thisexpense in expense" type="item-text-wrap" href="#/tab/expense/{{expense.id}}">
-        <img ng-src="{{expense.face}}">
-        <h2>{{expense.name}}</h2>
-        <p>{{expense.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(expense)">
-          Delete
-        </ion-option-button>
+          در اینجا احتمالا خرج های قبلی رو نشون بدیم
       </ion-item>
     </ion-list>
+    <form ng-submit="submit()" ng-controller="ExpenseCtrl">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">هزینه به تومان</span>
+          <input type="number" placeholder="" ng-model="amount">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">موضوع هزینه</span>
+          <input type="text" placeholder="" ng-model="text">
+        </label>
+      </div>
+      <button class="button button-positive">
+        ثبت
+      </button>
+    </form>
   </ion-content>
 </ion-view>

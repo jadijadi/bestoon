@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
   })
 })
 
-.controller('ExpenseCtrl', function($scope, Expense) {
+.controller('ExpenseCtrl', function($scope, $http) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -23,19 +23,44 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+  $scope.submit = function() {
+    $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    $http.post(
+      'http://bestoon.ir/submit/expense/',
+      'token=test&text='+$scope.text+'&amount='+$scope.amount
+    )
+    .success(function(data){
+      $scope.text = '';
+      $scope.amount = '';
+      // show a TOAST
+    })
+    .error(function() {
+      $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
+      console.log('error while submitting expense')
+    })
+  }
 
-  $scope.expense = Expense.all();
-  $scope.remove = function(expense) {
-    Expense.remove(expense);
-  };
 })
 
 .controller('ExpenseDetailCtrl', function($scope, $stateParams, Expense) {
   $scope.expense = Expense.get($stateParams.expenseId);
 })
 
-.controller('IncomeCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('IncomeCtrl', function($scope, $http) {
+  $scope.submit = function() {
+    $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    $http.post(
+      'http://bestoon.ir/submit/income/',
+      'token=test&text='+$scope.text+'&amount='+$scope.amount
+    )
+    .success(function(data){
+      $scope.text = '';
+      $scope.amount = '';
+      // show a TOAST
+    })
+    .error(function() {
+      $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
+      console.log('error while submitting income')
+    })
+  }
 });
