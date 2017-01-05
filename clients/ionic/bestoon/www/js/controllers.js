@@ -1,18 +1,20 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $http) {
-  $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-  $http.post(
-    'http://bestoon.ir/q/generalstat/',
-    'token=test'
-  )
-  .success(function(data){
-    $scope.generalstat = data;
-  })
-  .error(function() {
-    $scope.message = 'erorr reading from bestoon stats' //TODO: show some error to user
-    console.log('error on request')
-  })
+  $scope.$on('$ionicView.enter', function(e) {
+    $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    $http.post(
+      'http://bestoon.ir/q/generalstat/',
+      'token=test'
+    )
+    .success(function(data){
+      $scope.generalstat = data;
+    })
+    .error(function() {
+      $scope.message = 'erorr reading from bestoon stats' //TODO: show some error to user
+      console.log('error on request')
+    })
+  });
 })
 
 .controller('ExpenseCtrl', function($scope, $http) {
