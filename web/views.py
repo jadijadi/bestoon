@@ -11,7 +11,7 @@ from json import JSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 from web.models import User, Token, Expense, Income, Passwordresetcodes
 from datetime import datetime
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from postmark import PMMail
 from django.db.models import Sum, Count
 
@@ -43,7 +43,25 @@ def grecaptcha_verify(request):
     verify_rs = verify_rs.json()
     return verify_rs.get("success", False)
 
+@csrf_exempt
+def login(request):
+    if request.POST.has_key('username') and request.POST.has_key('password'):
+        username = request.POST['username']
+        password = request.POST['password']
+        this_user = User.objects.get(username = username)
+        if (check_password(password, this_user.password)):
+            this_token = Token.objects.get(user = this_user)
+            token  = this_token.token
 
+            context = {}
+            context['result'] = 'ok'
+            context['token'] = token
+            return JsonResponse( context, encoder=JSONEncoder)
+
+        else:
+            context = {}
+            context['result'] = 'error'
+            return JsonResponse( context, encoder=JSONEncoder)
 
 def register(request):
     if request.POST.has_key('requestcode'): #form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
