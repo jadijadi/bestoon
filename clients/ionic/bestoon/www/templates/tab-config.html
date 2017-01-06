@@ -1,0 +1,29 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>تنظیمات</h2>
+
+
+    <form ng-submit="login()" ng-controller="ConfigCtrl" ng-show="{{token == null}}">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">نام کاربری</span>
+          <input type="text" placeholder="" ng-model="username">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">کلمه عبور</span>
+          <input type="text" placeholder="" ng-model="password">
+        </label>
+      </div>
+      <button class="button button-positive">
+        ورود
+      </button>
+    </form>
+
+<hr >
+
+    <button ng-click="logout()" class="button button-assertive" ng-controller="ConfigCtrl" ng-hide="{{token == null}}">
+        خروج
+    </button>
+
+  </ion-content>
+</ion-view>

@@ -45,6 +45,7 @@ def grecaptcha_verify(request):
 
 @csrf_exempt
 def login(request):
+    print (request.POST)
     if request.POST.has_key('username') and request.POST.has_key('password'):
         username = request.POST['username']
         password = request.POST['password']
