@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from cacheops.conf import settings
+from django.conf import settings
 
 
 def get_client_ip(request):
