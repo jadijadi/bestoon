@@ -13,8 +13,8 @@ from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from postmark import PMMail
 
-from web.models import Token, Expense, Income, Passwordresetcodes
-from web.utils import grecaptcha_verify
+from .models import Token, Expense, Income, Passwordresetcodes
+from .utils import grecaptcha_verify
 
 
 def register(request):
