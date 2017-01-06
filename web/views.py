@@ -15,11 +15,7 @@ from django.contrib.auth.hashers import make_password
 from postmark import PMMail
 from django.db.models import Sum, Count
 from web.utils import grecaptcha_verify
-
-random_str = lambda N: ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
-
-
-
+from django.utils.crypto import get_random_string
 
 def register(request):
     if request.POST.has_key('requestcode'): #form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
@@ -34,7 +30,7 @@ def register(request):
             return render(request, 'register.html', context)
 
         if not User.objects.filter(username = request.POST['username']).exists(): #if user does not exists
-                code = random_str(28)
+                code = get_random_string(length=32)
                 now = datetime.now()
                 email = request.POST['email']
                 password = make_password(request.POST['password'])
@@ -59,7 +55,7 @@ def register(request):
         if Passwordresetcodes.objects.filter(code=code).exists(): #if code is in temporary db, read the data and create the user
             new_temp_user = Passwordresetcodes.objects.get(code=code)
             newuser = User.objects.create(username=new_temp_user.username, password=new_temp_user.password, email=new_temp_user.email)
-            this_token = random_str(48)
+            this_token = get_random_string(length=48)
             token = Token.objects.create(user=newuser, token=this_token)
             Passwordresetcodes.objects.filter(code=code).delete() #delete the temporary activation code from db
             context = {'message': 'اکانت شما ساخته شد. توکن شما {} است. آن را ذخیره کنید چون دیگر نمایش داده نخواهد شد! جدی!'.format(this_token)}
