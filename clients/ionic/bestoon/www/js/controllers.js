@@ -45,8 +45,13 @@ angular.module('starter.controllers', [])
     })
   }
 })
-.controller('DashCtrl', function($scope, $http) {
+
+
+.controller('DashCtrl', function($scope, $http, $state) {
   $scope.$on('$ionicView.enter', function(e) {
+    if (!token) {
+      back_to_login_page($scope, $state);
+    }
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
       bestoonURL+'/q/generalstat/',
@@ -62,7 +67,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('ExpenseCtrl', function($scope, $http) {
+.controller('ExpenseCtrl', function($scope, $http, $state) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -70,6 +75,12 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+  $scope.$on('$ionicView.enter', function(e) {
+    if (!token) {
+      back_to_login_page($scope, $state);
+    }
+  })
+
   $scope.submit = function() {
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
@@ -89,11 +100,23 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $stateParams, Expense) {
+.controller('ExpenseDetailCtrl', function($scope, $stateParams, $state, Expense) {
+  $scope.$on('$ionicView.enter', function(e) {
+    if (!token) {
+      back_to_login_page($scope, $state);
+    }
+  })
+
   $scope.expense = Expense.get($stateParams.expenseId);
 })
 
-.controller('IncomeCtrl', function($scope, $http) {
+.controller('IncomeCtrl', function($scope, $http, $state) {
+  $scope.$on('$ionicView.enter', function(e) {
+    if (!token) {
+      back_to_login_page($scope, $state);
+    }
+  })
+
   $scope.submit = function() {
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
