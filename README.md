@@ -28,4 +28,7 @@ To run tests in Bestoon simply use `python manage.py test`.
 If you want more verbosity you can use `-v` option with `0, 1, 2, or 3.`; e.g. `python manage.py test -v2`
 
 ## TODO
-[] No need for a login page after registration
+- [x] a restful login service. user will give user pass and will get her token
+- [x] local storage for ionic app. will store token and will using it when calling anything
+- [ ] create and submit the APK!
+- [ ] expand the error messages on the server side. cliend should understand that token was not valid and refer user to lgoin page
