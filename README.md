@@ -27,6 +27,10 @@ To run tests in Bestoon simply use `python manage.py test`.
 
 If you want more verbosity you can use `-v` option with `0, 1, 2, or 3.`; e.g. `python manage.py test -v2`
 
+## More Clients
+
+[Ruby Console Clients API bestoon]("http://github.com/shayanzare007/ruby-bestoon-api")
+
 ## TODO
 - [x] a restful login service. user will give user pass and will get her token
 - [x] local storage for ionic app. will store token and will using it when calling anything
