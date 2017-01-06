@@ -49,11 +49,10 @@ def login(request):
     if request.POST.has_key('username') and request.POST.has_key('password'):
         username = request.POST['username']
         password = request.POST['password']
-        this_user = User.objects.get(username = username)
+        this_user = get_object_or_404(User, username = username)
         if (check_password(password, this_user.password)):
-            this_token = Token.objects.get(user = this_user)
+            this_token = get_object_or_404(Token, user = this_user)
             token  = this_token.token
-
             context = {}
             context['result'] = 'ok'
             context['token'] = token
@@ -141,7 +140,7 @@ def generalstat(request):
     print request.GET
     print request.POST
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token=this_token).get()
+    this_user = get_object_or_404(User,token__token=this_token)
     income = Income.objects.filter(user=this_user).aggregate(Count('amount'), Sum('amount'))
     expense = Expense.objects.filter(user=this_user).aggregate(Count('amount'), Sum('amount'))
     context = {}
@@ -162,7 +161,7 @@ def submit_income(request):
     # TODO; validate data. user might be fake. token might be fake, amount might be...
     # TODO: is the token valid?
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token=this_token).get()
+    this_user = get_object_or_404(User, token__token=this_token)
     if 'date' not in request.POST:
         date = datetime.now()
     else:
@@ -182,7 +181,7 @@ def submit_expense(request):
     # TODO; validate data. user might be fake. token might be fake, amount might be...
     # TODO: is the token valid?
     this_token = request.POST['token']
-    this_user = User.objects.filter(token__token=this_token).get()
+    this_user = get_object_or_404(User, token__token=this_token)
     if 'date' not in request.POST:
         date = datetime.now()
     else:
