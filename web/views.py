@@ -14,10 +14,7 @@ from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from postmark import PMMail
 from django.db.models import Sum, Count
-
-
-
-# Create your views here.
+from web.utils import grecaptcha_verify
 
 random_str = lambda N: ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
