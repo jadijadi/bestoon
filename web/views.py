@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
-import requests
-import random
-import string
-import time
+
+from datetime import datetime
+from json import JSONEncoder
 
 from django.conf import settings
-from django.shortcuts import render
-from django.http import JsonResponse
-from json import JSONEncoder
-from django.views.decorators.csrf import csrf_exempt
-from web.models import User, Token, Expense, Income, Passwordresetcodes
-from datetime import datetime
 from django.contrib.auth.hashers import make_password
-from postmark import PMMail
 from django.db.models import Sum, Count
-from web.utils import grecaptcha_verify
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils.crypto import get_random_string
+from django.views.decorators.csrf import csrf_exempt
+from postmark import PMMail
+
+from web.models import User, Token, Expense, Income, Passwordresetcodes
+from web.utils import grecaptcha_verify
+
 
 def register(request):
     if request.POST.has_key('requestcode'): #form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
