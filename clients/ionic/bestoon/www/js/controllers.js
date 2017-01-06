@@ -1,17 +1,33 @@
 angular.module('starter.controllers', [])
 
 
-.controller('ConfigCtrl', function($scope, $http) {
+.controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory) {
+  $scope.loggedin = false;
+  token = storage.getItem('token');
+  if (token) {
+    $scope.loggedin = true;
+  }
+
   $scope.login = function () { // check passwsord and user name with webservice
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
-      'http://localhost:8009/accounts/login/',
+      bestoonURL+'/accounts/login/',
       'username='+$scope.username+'&password='+$scope.password
     )
     .success(function(data){
-      console.log(data);
-      $scope.token = data['token'];
-      console.log($scope.token);
+      if (data.status = 'ok') {
+        token = data['token'];
+        storage.setItem('token', token);
+        $scope.loggedin = true;
+        console.log('logged in with token:'+token);
+        $ionicHistory.clearCache([$state.current.name]).then(function() {
+            $state.reload();
+        })
+      }
+      else {
+        // request was fine, but error on username / password
+        // TODO: toast message about failed login
+      }
     })
     .error(function() {
       $scope.message = 'erorr logging in' //TODO: show some error to user
@@ -21,15 +37,20 @@ angular.module('starter.controllers', [])
 
   $scope.logout = function () {
     console.log('logout');
-    $scope.token = null;
+    storage.removeItem('token');
+    $scope.loggedin = false;
+    token = null;
+    $ionicHistory.clearCache([$state.current.name]).then(function() {
+        $state.reload();
+    })
   }
 })
 .controller('DashCtrl', function($scope, $http) {
   $scope.$on('$ionicView.enter', function(e) {
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
-      'http://bestoon.ir/q/generalstat/',
-      'token=test'
+      bestoonURL+'/q/generalstat/',
+      'token='+token
     )
     .success(function(data){
       $scope.generalstat = data;
@@ -52,8 +73,8 @@ angular.module('starter.controllers', [])
   $scope.submit = function() {
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
-      'http://bestoon.ir/submit/expense/',
-      'token=test&text='+$scope.text+'&amount='+$scope.amount
+      bestoonURL+'/submit/expense/',
+      'token='+token+'&text='+$scope.text+'&amount='+$scope.amount
     )
     .success(function(data){
       $scope.text = '';
@@ -76,8 +97,8 @@ angular.module('starter.controllers', [])
   $scope.submit = function() {
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.post(
-      'http://bestoon.ir/submit/income/',
-      'token=test&text='+$scope.text+'&amount='+$scope.amount
+      bestoonURL+'/submit/income/',
+      'token='+token+'&text='+$scope.text+'&amount='+$scope.amount
     )
     .success(function(data){
       $scope.text = '';
