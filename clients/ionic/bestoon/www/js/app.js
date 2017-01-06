@@ -77,9 +77,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'IncomeCtrl'
       }
     }
+  })
+
+  .state('tab.config', {
+    url: '/config',
+    views: {
+      'tab-config': {
+        templateUrl: 'templates/tab-config.html',
+        controller: 'ConfigCtrl'
+      }
+    }
   });
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 
 });
+
+
+function back_to_login_page($scope, $state) { 
+  token = null;
+  $scope.loggedin = false;
+  storage.removeItem('token');
+  $state.go('tab.config');
+}
+
+
+var storage = window.localStorage;
+var token = storage.getItem('token');
+
+bestoonURL = storage.getItem('bestoonURL')
+if (!bestoonURL) {
+    var bestoonURL = 'http://localhost:8009';
+    storage.setItem('bestoonURL', 'http://localhost:8009')
+}

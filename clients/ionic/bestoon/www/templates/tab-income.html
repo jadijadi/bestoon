@@ -1,9 +1,23 @@
-<ion-view view-title="Account">
+<ion-view view-title="ثبت درآمد">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="thisexpense in expense" type="item-text-wrap" href="#/tab/expense/{{expense.id}}">
+          در اینجا احتمالا درآمدهای قبلی رو نشون بدیم
+      </ion-item>
     </ion-list>
-  </ion-content>
+    <form ng-submit="submit()" ng-controller="IncomeCtrl">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">درآمد به تومان</span>
+          <input type="number" placeholder="" ng-model="amount">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">توضیح درآمد</span>
+          <input type="text" placeholder="" ng-model="text">
+        </label>
+      </div>
+      <button class="button button-positive">
+        ثبت
+      </button>
+    </form>  </ion-content>
 </ion-view>
