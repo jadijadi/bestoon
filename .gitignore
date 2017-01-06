@@ -92,3 +92,6 @@ ENV/
 
 #idea
 .idea
+
+#SQL Lite DBs
+*.sqlite3
