@@ -12,7 +12,7 @@ To run Bestoon in development mode; Just use steps bellow:
 
   ```bash
   git clone https://github.com/jadijadi/bestoon
-  virtualenv -p python2 build  # Create virtualenv named env
+  virtualenv -p python2 build  # Create virtualenv named build
   source build/bin/activate
   pip install -r requirements.txt
   python manage.py migrate  # Create database tables
