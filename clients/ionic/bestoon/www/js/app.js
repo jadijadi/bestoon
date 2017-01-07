@@ -96,7 +96,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 });
 
 
-function back_to_login_page($scope, $state) { 
+function back_to_login_page($scope, $state) {
   token = null;
   $scope.loggedin = false;
   storage.removeItem('token');
@@ -109,6 +109,6 @@ var token = storage.getItem('token');
 
 bestoonURL = storage.getItem('bestoonURL')
 if (!bestoonURL) {
-    var bestoonURL = 'http://localhost:8009';
-    storage.setItem('bestoonURL', 'http://localhost:8009')
+    var bestoonURL = 'http://bestoon.ir';
+    storage.setItem('bestoonURL', bestoonURL)
 }
