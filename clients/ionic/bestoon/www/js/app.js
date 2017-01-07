@@ -108,6 +108,8 @@ var storage = window.localStorage;
 var token = storage.getItem('token');
 
 bestoonURL = storage.getItem('bestoonURL')
+console.log(bestoonURL)
+
 if (!bestoonURL) {
     var bestoonURL = 'http://bestoon.ir';
     storage.setItem('bestoonURL', bestoonURL)
