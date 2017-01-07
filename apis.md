@@ -6,7 +6,7 @@
 /submit/income/
   POST, returns a json
   input: date (optional), text, amount, token
-  output: status:ok
+  output: result:ok
 
 /accounts/login/
   POST, returns a json

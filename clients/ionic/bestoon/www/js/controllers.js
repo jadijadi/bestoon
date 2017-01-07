@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
       'username='+$scope.username+'&password='+$scope.password
     )
     .success(function(data){
-      if (data.status = 'ok') {
+      if (data.result == 'ok') {
         token = data['token'];
         storage.setItem('token', token);
         $scope.loggedin = true;
