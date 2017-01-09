@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-import requests
-import random
-import string
-import time
+
+from datetime import datetime
+from json import JSONEncoder
 
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from django.db.models import Sum, Count
 from django.http import JsonResponse
-from json import JSONEncoder
+from django.shortcuts import render
+from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from web.models import User, Token, Expense, Income, Passwordresetcodes
 from datetime import datetime
@@ -16,32 +19,16 @@ from postmark import PMMail
 from django.db.models import Sum, Count
 
 # Create your views here.
+from postmark import PMMail
+
+from .models import Token, Expense, Income, Passwordresetcodes
+from .utils import grecaptcha_verify
+
 
 random_str = lambda N: ''.join(
     random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
 
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-
-def grecaptcha_verify(request):
-    data = request.POST
-    captcha_rs = data.get('g-recaptcha-response')
-    url = "https://www.google.com/recaptcha/api/siteverify"
-    params = {
-        'secret': settings.RECAPTCHA_SECRET_KEY,
-        'response': captcha_rs,
-        'remoteip': get_client_ip(request)
-    }
-    verify_rs = requests.get(url, params=params, verify=True)
-    verify_rs = verify_rs.json()
-    return verify_rs.get("success", False)
 
 @csrf_exempt
 def login(request):
@@ -62,6 +49,8 @@ def login(request):
             context['result'] = 'error'
             return JsonResponse( context, encoder=JSONEncoder)
 
+
+
 def register(request):
     if request.POST.has_key(
             'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
@@ -76,9 +65,8 @@ def register(request):
                 'message': 'متاسفانه این ایمیل قبلا استفاده شده است. در صورتی که این ایمیل شما است، از صفحه ورود گزینه فراموشی پسورد رو انتخاب کنین. ببخشید که فرم ذخیره نشده. درست می شه'}  # TODO: forgot password
             # TODO: keep the form data
             return render(request, 'register.html', context)
-
         if not User.objects.filter(username=request.POST['username']).exists():  # if user does not exists
-            code = random_str(28)
+            code = get_random_string(length=32)
             now = datetime.now()
             email = request.POST['email']
             password = make_password(request.POST['password'])
@@ -108,7 +96,7 @@ def register(request):
             new_temp_user = Passwordresetcodes.objects.get(code=code)
             newuser = User.objects.create(username=new_temp_user.username, password=new_temp_user.password,
                                           email=new_temp_user.email)
-            this_token = random_str(48)
+            this_token = get_random_string(length=48)
             token = Token.objects.create(user=newuser, token=this_token)
             Passwordresetcodes.objects.filter(code=code).delete()  # delete the temporary activation code from db
             context = {
