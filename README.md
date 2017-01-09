@@ -34,6 +34,7 @@ The project contains two different clients (command line and an ionic app for an
 - [Ruby Console Clients API bestoon](http://github.com/shayanzare007/ruby-bestoon-api)
 - [Angular 2 Web Client](https://github.com/n1arash/ngBestoon)
 - [Bestoon Bash Script](https://github.com/moeinroid/Bestoon-bash-script)
+- [Telegram Bot Client](https://github.com/farbodgame/bestoon-telegram)
 
 ## TODO
 - [x] a restful login service. user will give user pass and will get her token
