@@ -17,7 +17,15 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-
+@font-face {
+  font-family: 'Vazir';
+  src: url('../fonts/Vazir.eot');
+  src: url('../fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/Vazir.woff') format('woff'),
+     url('../fonts/Vazir.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+$font-family-base:               'Vazir' !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-
