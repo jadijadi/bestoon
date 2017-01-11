@@ -16,7 +16,6 @@ from web.models import User, Token, Expense, Income, Passwordresetcodes
 from datetime import datetime
 from django.contrib.auth.hashers import make_password, check_password
 from postmark import PMMail
-from django.db.models import Sum, Count
 
 # Create your views here.
 from postmark import PMMail
