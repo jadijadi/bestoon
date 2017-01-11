@@ -1,0 +1,43 @@
+// Global Fonts
+// --------------------------
+@font-face {
+    font-family: 'Samim';
+    src: url('#{$global-fonts-path}/Samim.eot');
+    src: url('#{$global-fonts-path}/Samim.eot?#iefix') format('embedded-opentype'),
+		 url('#{$global-fonts-path}/Samim.woff') format('woff'),
+		 url('#{$global-fonts-path}/Samim.ttf') format('truetype');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Samim';
+    src: url('#{$global-fonts-path}/Samim-Bold.eot');
+    src: url('#{$global-fonts-path}/Samim-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('#{$global-fonts-path}/Samim-Bold.woff') format('woff'),
+		 url('#{$global-fonts-path}/Samim-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('#{$global-fonts-path}/Vazir.eot');
+  src: url('#{$global-fonts-path}/Vazir.eot?#iefix') format('embedded-opentype'),
+       url('#{$global-fonts-path}/Vazir.woff') format('woff'),
+       url('#{$global-fonts-path}/Vazir.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('#{$global-fonts-path}/Vazir-Bold.eot');
+  src: url('#{$global-fonts-path}/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+       url('#{$global-fonts-path}/Vazir-Bold.woff') format('woff'),
+       url('#{$global-fonts-path}/Vazir-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: Vazir;
+  src: url('#{$global-fonts-path}/Vazir-Light.eot');
+  src: url('#{$global-fonts-path}/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+       url('#{$global-fonts-path}/Vazir-Light.woff') format('woff'),
+       url('#{$global-fonts-path}/Vazir-Light.ttf') format('truetype');
+  font-weight: 300;
+}
