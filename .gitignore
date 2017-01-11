@@ -95,3 +95,4 @@ ENV/
 
 #SQL Lite DBs
 *.sqlite3
+*.origin
