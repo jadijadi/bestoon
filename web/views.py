@@ -75,7 +75,7 @@ def register(request):
                 email=email, time=now, code=code, username=username, password=password)
             temporarycode.save()
             message = PMMail(api_key=settings.POSTMARK_API_TOKEN,
-                             subject="فعالسازی اکاننت بستون",
+                             subject="فعالسازی اکانت بستون",
                              sender="jadi@jadi.net",
                              to=email,
                              text_body=" برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(
