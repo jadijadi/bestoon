@@ -96,3 +96,6 @@ ENV/
 #SQL Lite DBs
 *.sqlite3
 *.origin
+
+
+bestoon/settings.py
