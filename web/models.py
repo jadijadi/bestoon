@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.utils.crypto import get_random_string
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -14,7 +14,7 @@ class Passwordresetcodes(models.Model):
 
 class Token(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    token = models.CharField(max_length=48)
+    token = models.CharField(max_length=48,default=get_random_string(length=48))
 
     def __unicode__(self):
         return "{}_token".format(self.user)
