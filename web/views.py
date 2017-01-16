@@ -125,6 +125,30 @@ def whoami(request):
 
 #return General Status of a user as Json (income,expense)
 @csrf_exempt
+def expencestat(request):
+	# TODO: add paging using :
+	#		MAX_ID	Return expense earlier than this max_id.(optional, default is a very big number around infinity ;))
+	#		COUNT	Count of expense to return.(optional, default is 10 or 20)
+    this_token = request.POST['token']
+    this_user = get_object_or_404(User, token__token=this_token)
+	
+    expense = Expense.objects.filter(user=this_user)
+    return JsonResponse(expense, encoder=JSONEncoder)
+
+
+@csrf_exempt
+def incomestat(request):
+	# TODO: add paging using :
+	#		MAX_ID	Return income earlier than this max_id.(optional, default is a very big number around infinity ;))
+	#		COUNT	Count of income to return. (optional, default is 10 or 20)
+    this_token = request.POST['token']
+    this_user = get_object_or_404(User, token__token=this_token)
+	
+    income = Income.objects.filter(user=this_user)
+    return JsonResponse(income, encoder=JSONEncoder)
+
+
+@csrf_exempt
 def generalstat(request):
     # TODO: should get a valid duration (from - to), if not, use 1 month
     # TODO: is the token valid?
