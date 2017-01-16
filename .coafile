@@ -1,3 +1,4 @@
 [Default]
 bears = PEP8Bear
 files = **/*.py
+ignore = clients/ionic/**,**/migrations/**

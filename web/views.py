@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from json import JSONEncoder
+from datetime import datetime
 
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -12,42 +13,50 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
-from web.models import User, Token, Expense, Income, Passwordresetcodes
-from datetime import datetime
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.decorators.http import require_POST
+
+from .models import User, Token, Expense, Income, Passwordresetcodes
+
 from postmark import PMMail
 
 # Create your views here.
 from postmark import PMMail
 
-from .models import Token, Expense, Income, Passwordresetcodes
-from .utils import grecaptcha_verify
+from .utils import grecaptcha_verify, RateLimited
 
-#create random string for Toekn 
+# create random string for Toekn
 random_str = lambda N: ''.join(
     random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
-#login , (API) , returns : JSON = statuns (ok|error) and token
+# login , (API) , returns : JSON = statuns (ok|error) and token
+
+
 @csrf_exempt
+@require_POST
 def login(request):
-    print(request.POST)
-    if request.POST.has_key('username') and request.POST.has_key('password'): #check if POST objects has username and password
+    # check if POST objects has username and password
+    if request.POST.has_key('username') and request.POST.has_key('password'):
         username = request.POST['username']
         password = request.POST['password']
         this_user = get_object_or_404(User, username=username)
-        if (check_password(password, this_user.password)): #authentication
+        if (check_password(password, this_user.password)):  # authentication
             this_token = get_object_or_404(Token, user=this_user)
             token = this_token.token
             context = {}
             context['result'] = 'ok'
             context['token'] = token
-            return JsonResponse(context, encoder=JSONEncoder) #return {'status':'ok','token':'TOKEN'} 
+            # return {'status':'ok','token':'TOKEN'}
+            return JsonResponse(context, encoder=JSONEncoder)
         else:
             context = {}
             context['result'] = 'error'
-            return JsonResponse(context, encoder=JSONEncoder) #return {'status':'error'}
+            # return {'status':'error'}
+            return JsonResponse(context, encoder=JSONEncoder)
 
 #register (web)
+
+
 def register(request):
     if request.POST.has_key(
             'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
@@ -112,8 +121,11 @@ def register(request):
         context = {'message': ''}
         return render(request, 'register.html', context)
 
-#return username based on sent POST Token 
+# return username based on sent POST Token
+
+
 @csrf_exempt
+@require_POST
 def whoami(request):
     this_token = request.POST['token']  # TODO: Check if there is no `token`
     # Check if there is a user with this token; will retun 404 instead.
@@ -121,15 +133,16 @@ def whoami(request):
 
     return JsonResponse({
         'user': this_user.username,
-    }, encoder=JSONEncoder)  #return {'user':'USERNAME'}
+    }, encoder=JSONEncoder)  # return {'user':'USERNAME'}
 
-#return General Status of a user as Json (income,expense)
+# return General Status of a user as Json (income,expense)
+
+
 @csrf_exempt
+@require_POST
 def generalstat(request):
     # TODO: should get a valid duration (from - to), if not, use 1 month
     # TODO: is the token valid?
-    print request.GET
-    print request.POST
     this_token = request.POST['token']
     this_user = get_object_or_404(User, token__token=this_token)
     income = Income.objects.filter(user=this_user).aggregate(
@@ -139,15 +152,22 @@ def generalstat(request):
     context = {}
     context['expense'] = expense
     context['income'] = income
-    return JsonResponse(context, encoder=JSONEncoder)#return {'income':'INCOME','expanse':'EXPANSE'}
+    # return {'income':'INCOME','expanse':'EXPANSE'}
+    return JsonResponse(context, encoder=JSONEncoder)
 
-#homepage of System 
+# homepage of System
+
+
 def index(request):
     context = {}
     return render(request, 'index.html', context)
 
-#submit an income to system (api) , input : token(POST) , output : status = (ok)
+# submit an income to system (api) , input : token(POST) , output : status
+# = (ok)
+
+
 @csrf_exempt
+@require_POST
 def submit_income(request):
     """ submit an income """
 
@@ -164,10 +184,14 @@ def submit_income(request):
 
     return JsonResponse({
         'status': 'ok',
-    }, encoder=JSONEncoder)#return {'status':'ok'}
+    }, encoder=JSONEncoder)  # return {'status':'ok'}
 
-#submit an expanse to system (api) , input : token(POST) , output : status = (ok)
+# submit an expanse to system (api) , input : token(POST) , output :
+# status = (ok)
+
+
 @csrf_exempt
+@require_POST
 def submit_expense(request):
     """ submit an expense """
 
@@ -184,4 +208,4 @@ def submit_expense(request):
 
     return JsonResponse({
         'status': 'ok',
-    }, encoder=JSONEncoder)#return {'status':'ok'}
+    }, encoder=JSONEncoder)  # return {'status':'ok'}
