@@ -4,6 +4,7 @@ from datetime import datetime
 from json import JSONEncoder
 from datetime import datetime
 
+from django.core import serializers
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.hashers import make_password
@@ -16,7 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
 
-from .models import User, Token, Expense, Income, Passwordresetcodes
+from .models import User, Token, Expense, Income, Passwordresetcodes, News
 
 from postmark import PMMail
 
@@ -31,6 +32,13 @@ random_str = lambda N: ''.join(
 
 # login , (API) , returns : JSON = statuns (ok|error) and token
 
+
+
+@csrf_exempt
+def news(request):
+    news = News.objects.all().order_by('-date')[:11]
+    news_serialized = serializers.serialize("json", news)
+    return JsonResponse(news_serialized, encoder=JSONEncoder, safe=False)
 
 @csrf_exempt
 @require_POST

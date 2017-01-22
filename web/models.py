@@ -4,6 +4,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
+class News(models.Model):
+    title = models.CharField(max_length=250)
+    text = models.TextField()
+    date = models.DateTimeField()
+    def __unicode__(self):
+        return self.title
+
 class Passwordresetcodes(models.Model):
     code = models.CharField(max_length=32)
     email = models.CharField(max_length=120)
