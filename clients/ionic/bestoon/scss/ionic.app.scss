@@ -29,3 +29,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 $font-family-base:               'Vazir' !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+ion-content {
+  direction: rtl;
+  margin-right: 10px;
+  margin-left: 10px;
+}
