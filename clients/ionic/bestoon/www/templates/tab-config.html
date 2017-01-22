@@ -30,5 +30,16 @@
         خروج
     </button>
 
+
+      <h4 class="title">جدیدترین اخبار بستون</h1>
+
+    <div ng-controller="NewsCtrl">
+      <ul class="list" ng-repeat="n in news">
+        <li class="item item-text-wrap">
+          <b>{{n.fields.title}}</b>. {{n.fields.text}}
+        </li>
+      </ul>
+    </div>
+
   </ion-content>
 </ion-view>
