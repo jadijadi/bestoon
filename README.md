@@ -41,6 +41,8 @@ The project contains two different clients (command line and an ionic app for an
 - [Telegram Bot Client](https://github.com/farbodgame/bestoon-telegram)
 - [Bestoon Telegram Bot](https://github.com/AlirezaieS/BestoonBot)
 - [Bestoon Telegram Bot Client](https://github.com/MojtabaMonfared/BestoonClient)
+- [BestoonMsn, a native Android client for Bestoon](https://github.com/theOneWithMind/BestoonMsn)
+
 
 
 ## TODO
