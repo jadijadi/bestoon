@@ -1,11 +1,11 @@
 <ion-view view-title="ثبت درآمد">
-  <ion-content>
+  <ion-content ng-controller="IncomeCtrl">
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="thisexpense in expense" type="item-text-wrap" href="#/tab/expense/{{expense.id}}">
           در اینجا احتمالا درآمدهای قبلی رو نشون بدیم
       </ion-item>
     </ion-list>
-    <form ng-submit="submit()" ng-controller="IncomeCtrl">
+    <form ng-submit="submit()" >
       <div class="list">
         <label class="item item-input item-stacked-label">
           <span class="input-label">درآمد به تومان</span>
@@ -19,5 +19,14 @@
       <button class="button button-positive">
         ثبت
       </button>
-    </form>  </ion-content>
+    </form>
+
+
+    <div class="card" ng-repeat="income in incomes">
+      <div class="item item-text-wrap">
+          {{income.fields.amount}} تومان از {{income.fields.text}}
+      </div>
+    </div>
+
+  </ion-content>
 </ion-view>

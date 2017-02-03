@@ -1,11 +1,11 @@
 <ion-view view-title="ثبت خرج">
-  <ion-content>
+  <ion-content ng-controller="ExpenseCtrl">
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="thisexpense in expense" type="item-text-wrap" href="#/tab/expense/{{expense.id}}">
           در اینجا احتمالا خرج های قبلی رو نشون بدیم
       </ion-item>
     </ion-list>
-    <form ng-submit="submit()" ng-controller="ExpenseCtrl">
+    <form ng-submit="submit()" >
       <div class="list">
         <label class="item item-input item-stacked-label">
           <span class="input-label">هزینه به تومان</span>
@@ -20,5 +20,12 @@
         ثبت
       </button>
     </form>
+
+    <div class="card" ng-repeat="expense in expenses">
+      <div class="item item-text-wrap">
+          {{expense.fields.amount}} تومان برای {{expense.fields.text}}
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>
