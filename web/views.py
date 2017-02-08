@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from json import JSONEncoder
 from datetime import datetime
 
@@ -12,6 +11,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
@@ -30,6 +30,7 @@ from .utils import grecaptcha_verify, RateLimited
 random_str = lambda N: ''.join(
     random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
+
 # login , (API) , returns : JSON = statuns (ok|error) and token
 
 
@@ -39,6 +40,7 @@ def news(request):
     news = News.objects.all().order_by('-date')[:11]
     news_serialized = serializers.serialize("json", news)
     return JsonResponse(news_serialized, encoder=JSONEncoder, safe=False)
+
 
 @csrf_exempt
 @require_POST
@@ -62,7 +64,8 @@ def login(request):
             # return {'status':'error'}
             return JsonResponse(context, encoder=JSONEncoder)
 
-#register (web)
+
+# register (web)
 
 
 def register(request):
@@ -129,6 +132,7 @@ def register(request):
         context = {'message': ''}
         return render(request, 'register.html', context)
 
+
 # return username based on sent POST Token
 
 
@@ -142,6 +146,7 @@ def whoami(request):
     return JsonResponse({
         'user': this_user.username,
     }, encoder=JSONEncoder)  # return {'user':'USERNAME'}
+
 
 # return General Status of a user as Json (income,expense)
 
@@ -160,7 +165,6 @@ def query_expenses(request):
     return JsonResponse(expenses_serialized, encoder=JSONEncoder, safe=False)
 
 
-
 @csrf_exempt
 @require_POST
 def query_incomes(request):
@@ -170,6 +174,7 @@ def query_incomes(request):
     incomes = Income.objects.filter(user=this_user).order_by('-date')[:num]
     incomes_serialized = serializers.serialize("json", incomes)
     return JsonResponse(incomes_serialized, encoder=JSONEncoder, safe=False)
+
 
 @csrf_exempt
 @require_POST
@@ -188,12 +193,14 @@ def generalstat(request):
     # return {'income':'INCOME','expanse':'EXPANSE'}
     return JsonResponse(context, encoder=JSONEncoder)
 
+
 # homepage of System
 
 
 def index(request):
     context = {}
     return render(request, 'index.html', context)
+
 
 # submit an income to system (api) , input : token(POST) , output : status
 # = (ok)
@@ -204,25 +211,23 @@ def index(request):
 def submit_income(request):
     """ submit an income """
 
-    # TODO; validate data. user might be fake. token might be fake, amount might be...
-    # TODO: is the token valid?
-    this_token = request.POST['token']
+    # TODO: revise validation for the amount
+    this_date = request.POST['date'] if 'date' in request.POST else timezone.now()
+    this_text = request.POST['text'] if 'text' in request.POST else ""
+    this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
+    this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
-    if 'date' not in request.POST:
-        date = datetime.now()
-    else:
-        date = request.POST['date']
-    Income.objects.create(user=this_user, amount=request.POST['amount'],
-                          text=request.POST['text'], date=date)
+
+    Income.objects.create(user=this_user, amount=this_amount,
+                          text=this_text, date=this_date)
 
     return JsonResponse({
         'status': 'ok',
-    }, encoder=JSONEncoder)  # return {'status':'ok'}
+    }, encoder=JSONEncoder)
+
 
 # submit an expanse to system (api) , input : token(POST) , output :
 # status = (ok)
-
-
 @csrf_exempt
 @require_POST
 def submit_expense(request):
@@ -233,7 +238,7 @@ def submit_expense(request):
     this_token = request.POST['token']
     this_user = get_object_or_404(User, token__token=this_token)
     if 'date' not in request.POST:
-        date = datetime.now()
+        date = timezone.now()
     else:
         date = request.POST['date']
     Expense.objects.create(user=this_user, amount=request.POST['amount'],
