@@ -107,4 +107,4 @@ var storage = window.localStorage;
 
 var token = storage.getItem('token');
 bestoonURL = 'http://bestoon.ir';
-//bestoonURL = 'http://localhost:8009'; //comment when releasing
+bestoonURL = 'http://localhost:8009'; //comment when releasing

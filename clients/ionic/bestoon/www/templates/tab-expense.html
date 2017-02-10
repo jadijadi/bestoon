@@ -21,11 +21,24 @@
       </button>
     </form>
 
-    <div class="card" ng-repeat="expense in expenses">
-      <div class="item item-text-wrap">
-          {{expense.fields.amount}} تومان برای {{expense.fields.text}}
-      </div>
-    </div>
+    <h3>تاریخچه</h3>
+    <ion-list
+              show-delete="shouldShowDelete"
+              can-swipe="listCanSwipe">
+      <ion-item ng-repeat="expense in expenses" class="item-thumbnail-left">
+
+            <h2>{{expense.fields.amount}}</h2>
+            <p>{{expense.fields.text}}</p>
+            <ion-option-button class="button-positive"
+                               ng-click="edit(expense)">
+              تغییر
+            </ion-option-button>
+            <ion-option-button class="button-info"
+                               ng-click="delete(expense)">
+              حذف
+            </ion-option-button>
+        </ion-item>
+      </ion-list>
 
   </ion-content>
 </ion-view>

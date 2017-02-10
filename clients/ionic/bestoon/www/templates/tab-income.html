@@ -21,12 +21,26 @@
       </button>
     </form>
 
+    <h3>تاریخچه</h3>
+    <ion-list
+              show-delete="shouldShowDelete"
+              can-swipe="listCanSwipe">
+      <ion-item ng-repeat="income in incomes" class="item-thumbnail-left">
 
-    <div class="card" ng-repeat="income in incomes">
-      <div class="item item-text-wrap">
-          {{income.fields.amount}} تومان از {{income.fields.text}}
-      </div>
-    </div>
+            <h2>{{income.fields.amount}}</h2>
+            <p>{{income.fields.text}}</p>
+            <ion-option-button class="button-positive"
+                               ng-click="edit(income)">
+              تغییر
+            </ion-option-button>
+            <ion-option-button class="button-info"
+                               ng-click="delete(income)">
+              حذف
+            </ion-option-button>
+        </ion-item>
+      </ion-list>
+
+
 
   </ion-content>
 </ion-view>

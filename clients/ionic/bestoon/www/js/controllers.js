@@ -45,7 +45,7 @@ angular.module('starter.controllers', [])
     }
   })
   .controller('NewsCtrl', function($scope, $http, $state) {
-    $scope.$on('$ionicView.enter', function(e) {      
+    $scope.$on('$ionicView.enter', function(e) {
       $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
       $http.post(bestoonURL + '/news/').success(function(data) {
           $scope.news = JSON.parse(data);
@@ -94,6 +94,18 @@ angular.module('starter.controllers', [])
             })
           })
 
+          $scope.shouldShowDelete = false;
+          $scope.listCanSwipe = true
+
+          $scope.edit = function(item) {
+            console.log('we are in edit for expense item '+item.pk);
+          }
+
+          $scope.delete = function(item) {
+            console.log('we are in delete for expense item '+item.pk);
+          }
+
+
           $scope.submit = function() {
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.post(
@@ -136,6 +148,18 @@ angular.module('starter.controllers', [])
             if (!token) {
               back_to_login_page($scope, $state);
             }
+
+            $scope.shouldShowDelete = false;
+            $scope.listCanSwipe = true
+
+            $scope.edit = function(item) {
+              console.log('we are in edit for income item '+item.pk);
+            }
+
+            $scope.delete = function(item) {
+              console.log('we are in delete for income item '+item.pk);
+            }
+
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.post(bestoonURL + '/q/incomes/', 'token='+token).success(function(data) {
                 $scope.incomes = JSON.parse(data);
