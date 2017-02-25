@@ -12,16 +12,15 @@
 
     <title>بستون،  پول کجاست؟</title>
 
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/bootstrap-rtl.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"  crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/style.css" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-rtl.css' %}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"  crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
     <!-- Latest compiled and minified CSS -->
 
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-    <link rel="stylesheet" href="/static/css/style.css" >
 
   </head>
 
@@ -43,7 +42,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="http://bestoon.ir">			                
+                    <a class="navbar-brand" href="{% url 'index' %}">			                
                       بستون
                     </a>
                 </div>
@@ -52,9 +51,9 @@
                   <ul class="nav navbar-nav navbar-left">
                     {% if user.is_authenticated %}
                     <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
-                    <li><a href="/accounts/logout">خروج</a></li>
+                    <li><a href="{% url 'logout' %}">خروج</a></li>
                     {% else %}
-                    <li><a href="/accounts/register">ثبت نام</a></li>
+                    <li><a href="{% url 'register' %}">ثبت نام</a></li>
                     <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
                     {% endif %}
                   </ul>
@@ -89,13 +88,13 @@
         <!-- /.container -->
 
         <!-- jQuery -->
-        <script src="/static/js/jquery.min.js"></script>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
 
         <!-- Bootstrap Core JavaScript -->
-        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 
-        <script src="/static/js/awesome.js"></script>
+        <script src="{% static 'js/awesome.js' %}"></script>
 
 
         {% block footer %}
