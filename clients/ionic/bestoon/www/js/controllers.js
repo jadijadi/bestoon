@@ -3,9 +3,11 @@ angular.module('starter.controllers', [])
 
   .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory) {
     $scope.loggedin = false;
+    $scope.tabTitle = 'ورود';
     token = storage.getItem('token');
     if (token) {
       $scope.loggedin = true;
+      $scope.tabTitle = 'تنظیمات';
     }
 
     $scope.login = function() { // check passwsord and user name with webservice
@@ -21,7 +23,9 @@ angular.module('starter.controllers', [])
             $scope.loggedin = true;
             console.log('logged in with token:' + token);
             $ionicHistory.clearCache([$state.current.name]).then(function() {
-              $state.reload();
+              $ionicHistory.clearCache(['tab']).then(function() {
+                $state.reload();
+              })
             })
           } else {
             // request was fine, but error on username / password
@@ -40,7 +44,9 @@ angular.module('starter.controllers', [])
       $scope.loggedin = false;
       token = null;
       $ionicHistory.clearCache([$state.current.name]).then(function() {
-        $state.reload();
+        $ionicHistory.clearCache(['tab']).then(function() {
+          $state.reload();
+        })
       })
     }
   })
@@ -138,4 +144,8 @@ angular.module('starter.controllers', [])
                 console.log('error while submitting income')
               })
           }
-        });
+        })
+  .controller('TabsCtrl', function($scope, $rootScope) {
+    token = storage.getItem('token');
+    $rootScope.loggedin = (token != null);
+  });
