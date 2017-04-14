@@ -16,16 +16,21 @@
           <input type="text" placeholder="" ng-model="text">
         </label>
       </div>
-      <button class="button button-positive">
-        ثبت
-      </button>
+      <div class="padding-horizontal">
+        <button class="button button-block button-positive">
+          ثبت
+        </button>
+      </div>
     </form>
 
-    <h3>تاریخچه</h3>
+    <h3 class="full-width-header balanced">
+      تاریخچه
+    </h3>
+    
     <ion-list
               show-delete="shouldShowDelete"
               can-swipe="listCanSwipe">
-      <ion-item ng-repeat="income in incomes" class="item-thumbnail-left">
+      <ion-item ng-repeat="income in incomes">
 
             <h2>{{income.fields.amount}}</h2>
             <p>{{income.fields.text}}</p>

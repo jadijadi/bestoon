@@ -9823,6 +9823,37 @@ a.button {
   transition-duration: 0s; }
 
 ion-content {
-  direction: rtl;
-  margin-right: 10px;
-  margin-left: 10px; }
+  direction: rtl; }
+
+.tab-item .tab-title {
+  font-family: "Vazir"; }
+
+.item-complex .item-content {
+  padding-right: 16px; }
+
+.item-input {
+  padding-right: 16px;
+  padding-left: 16px; }
+
+.item {
+  border-left-width: 0;
+  border-right-width: 0; }
+
+.full-width-header {
+  margin-bottom: 0;
+  padding: 10px; }
+
+.balanced {
+  background: #33cd5f;
+  color: #fff; }
+
+.assertive {
+  background: #ef473a;
+  color: #fff; }
+
+h3, .h3 {
+  font-size: 21px; }
+
+.item .badge.badge-left {
+  right: auto;
+  left: 16px; }

@@ -1,27 +1,35 @@
 <ion-view view-title="بستون">
-  <ion-content class="padding">
+  <ion-content>
 
-<p>
+<p class="padding">
   برنامه به سرعت در حال توسعه است. هر هفته چیز جدیدی خواهیم داشت. 
 </P>
 
-    <p>
-      <div class="row header">
-          <div class="col"></div>
-          <div class="col">دفعات</div>
-          <div class="col">جمع</div>
+    <div class="list">
+      <div class="item item-divider">
+        درآمد
       </div>
-      <div class="row header">
-          <div class="col">درآمد</div>
-          <div class="col">{{generalstat.income.amount__count}}</div>
-          <div class="col">{{generalstat.income.amount__sum}}</div>
+      <div class="item item-icon-left">
+        {{generalstat.income.amount__sum}} تومان 
+        <a href="#/tab/income">
+          <span class="badge badge-positive badge-left">
+            {{generalstat.income.amount__count}}
+          </span>
+        </a>
       </div>
-      <div class="row header">
-          <div class="col">هزینه‌</div>
-          <div class="col">{{generalstat.expense.amount__count}}</div>
-          <div class="col">{{generalstat.expense.amount__sum}}</div>
+
+      <div class="item item-divider">
+        هزینه
       </div>
-    </p>
+      <div class="item item-icon-left">
+        {{generalstat.expense.amount__sum}} تومان 
+        <a href="#/tab/expense">
+          <span class="badge badge-positive badge-left">
+            {{generalstat.expense.amount__count}}
+          </span>
+        </a>
+      </div>
+    </div>
 
   </ion-content>
 </ion-view>
