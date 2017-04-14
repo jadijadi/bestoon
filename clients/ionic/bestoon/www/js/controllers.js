@@ -30,11 +30,17 @@ angular.module('starter.controllers', [])
           } else {
             // request was fine, but error on username / password
             // TODO: toast message about failed login
+            $scope.message = 'login-error';
           }
         })
-        .error(function() {
-          $scope.message = 'erorr logging in' //TODO: show some error to user
-          console.log('error on login request')
+        .error(function(data, code) {
+          if (code == 404) {
+           $scope.message = 'login-error'; // user not found 
+          }
+          else {
+            $scope.message = 'login-req-error'; //error in connection
+          }
+          console.log('error on login request');
         })
     }
 
