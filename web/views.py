@@ -19,8 +19,6 @@ from django.views.decorators.http import require_POST
 
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
 
-from postmark import PMMail
-
 # Create your views here.
 from postmark import PMMail
 
