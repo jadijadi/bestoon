@@ -30,6 +30,7 @@ if you're using a windows machine , follow steps below:
 2. Clone the project using:  `git clone https://github.com/jadijadi/bestoon`.
 3. Make Environment Ready Like This:
 ``` Command Prompt
+cd bestoon
 virutalenv -p "PATH\TO\Python.exe" build # Give Full Path To python.exe
 build\Scripts\activate # Activate The Virutal Environment
 pip install -r requirements.txt
