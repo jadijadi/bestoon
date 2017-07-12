@@ -25,7 +25,7 @@ To run Bestoon in development mode; Just use steps bellow:
 
 ## Run On Windows
 
-if you're using a windows machine , follow steps below:
+If You're On A Windows Machine , Make Environment Ready By Following Steps Below:
 1. Install `python2`, `pip`, `virtualenv` 
 2. Clone the project using:  `git clone https://github.com/jadijadi/bestoon`.
 3. Make Environment Ready Like This:
