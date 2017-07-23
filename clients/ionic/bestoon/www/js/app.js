@@ -23,7 +23,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+  $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
+  $ionicConfigProvider.navBar.alignTitle("center");
+  $ionicConfigProvider.tabs.position("bottom");
+  $ionicConfigProvider.tabs.style("standard");
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
