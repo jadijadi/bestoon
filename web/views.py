@@ -10,7 +10,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
@@ -18,8 +17,6 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
 
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
-
-from postmark import PMMail
 
 # Create your views here.
 from postmark import PMMail
