@@ -34,7 +34,7 @@ cd bestoon
 virutalenv -p "PATH\TO\Python.exe" build # Give Full Path To python.exe
 build\Scripts\activate # Activate The Virutal Environment
 pip install -r requirements.txt
-move bestoon\settings.py.sample bestoon/settings.py
+move bestoon\settings.py.sample bestoon\settings.py
 python manage.py migrate # Create Database Tables
 ```
 4. Run `Bestoon` using `python manage.py runserver`
