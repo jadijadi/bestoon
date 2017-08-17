@@ -12,6 +12,8 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
 from .utils import grecaptcha_verify
+import random
+import string
 
 # create random string for Toekn
 random_str = lambda N: ''.join(
