@@ -23,7 +23,6 @@ random_str = lambda N: ''.join(
 # login , (API) , returns : JSON = statuns (ok|error) and token
 
 
-
 @csrf_exempt
 def news(request):
     news = News.objects.all().order_by('-date')[:11]
@@ -39,17 +38,19 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         this_user = get_object_or_404(User, username=username)
-        if (check_password(password, this_user.password)):  # authentication
+        if check_password(password, this_user.password):  # authentication
             this_token = get_object_or_404(Token, user=this_user)
             token = this_token.token
-            context = {}
-            context['result'] = 'ok'
-            context['token'] = token
+            context = {
+                'result': 'ok',
+                'token': token
+            }
             # return {'status':'ok','token':'TOKEN'}
             return JsonResponse(context, encoder=JSONEncoder)
         else:
-            context = {}
-            context['result'] = 'error'
+            context = {
+                'result': 'error'
+            }
             # return {'status':'error'}
             return JsonResponse(context, encoder=JSONEncoder)
 
@@ -58,8 +59,8 @@ def login(request):
 
 
 def register(request):
-    if request.POST.has_key(
-            'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
+    # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
+    if 'requestcode' in request.POST:
         # is this spam? check reCaptcha
         if not grecaptcha_verify(request):  # captcha was not correct
             context = {
@@ -150,9 +151,6 @@ def whoami(request):
 # return General Status of a user as Json (income,expense)
 
 
-
-
-
 @csrf_exempt
 @require_POST
 def query_expenses(request):
@@ -186,9 +184,10 @@ def generalstat(request):
         Count('amount'), Sum('amount'))
     expense = Expense.objects.filter(user=this_user).aggregate(
         Count('amount'), Sum('amount'))
-    context = {}
-    context['expense'] = expense
-    context['income'] = income
+    context = {
+        'expense': expense,
+        'income': income
+    }
     # return {'income':'INCOME','expanse':'EXPANSE'}
     return JsonResponse(context, encoder=JSONEncoder)
 
