@@ -218,20 +218,23 @@ def index(request):
 def submit_income(request):
     """ submit an income """
 
-    # TODO: revise validation for the amount
     this_date = request.POST['date'] if 'date' in request.POST else timezone.now()
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
+    try:
+        int(this_amount)
+        Income.objects.create(user=this_user, amount=this_amount,
+                              text=this_text, date=this_date)
 
-    Income.objects.create(user=this_user, amount=this_amount,
-                          text=this_text, date=this_date)
-
-    return JsonResponse({
-        'status': 'ok',
-    }, encoder=JSONEncoder)
-
+        return JsonResponse({
+            'status': 'ok',
+        }, encoder=JSONEncoder)  # return {'status':'ok'}
+    except ValueError:
+        return JsonResponse({
+            'status': 'Error [This amount not valid]',
+        }, encoder=JSONEncoder)  # return {'status':'Error [This amount not valid]'}
 
 # submit an expanse to system (api) , input : token(POST) , output :
 # status = (ok)
@@ -240,16 +243,20 @@ def submit_income(request):
 def submit_expense(request):
     """ submit an expense """
 
-    # TODO: revise validation for the amount
     this_date = request.POST['date'] if 'date' in request.POST else timezone.now()
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
+    try:
+        int(this_amount)
+        Expense.objects.create(user=this_user, amount=this_amount,
+                               text=this_text, date=this_date)
 
-    Expense.objects.create(user=this_user, amount=this_amount,
-                           text=this_text, date=this_date)
-
-    return JsonResponse({
-        'status': 'ok',
-    }, encoder=JSONEncoder)  # return {'status':'ok'}
+        return JsonResponse({
+            'status': 'ok',
+        }, encoder=JSONEncoder)  # return {'status':'ok'}
+    except ValueError:
+        return JsonResponse({
+            'status': 'Error [This amount not valid]',
+        }, encoder=JSONEncoder)  # return {'status':'Error [This amount not valid]'}
