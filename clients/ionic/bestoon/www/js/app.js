@@ -106,5 +106,5 @@ function back_to_login_page($scope, $state) {
 var storage = window.localStorage;
 
 var token = storage.getItem('token');
-bestoonURL = 'http://localhost:8000';
-//bestoonURL = 'http://localhost:8009'; //comment when releasing
+//bestoonURL = 'http://localhost:8000';
+bestoonURL = 'http://bestoon.ir'; //comment when releasing

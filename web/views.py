@@ -213,13 +213,14 @@ def index(request):
 @csrf_exempt
 @require_POST
 def edit_expense(request):
-    """ edit an income """    
+    """edit an income"""
+    print (request.POST)
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
-    this_pk = request.POST['id'] if 'id' in request.POST else "0"
+    this_pk = request.POST['id'] if 'id' in request.POST else "-1"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
-
+    
     this_expense = get_object_or_404(Expense, pk=this_pk, user=this_user)
     this_expense.text = this_text
     this_expense.amount = this_amount

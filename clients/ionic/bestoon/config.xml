@@ -42,5 +42,5 @@
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <engine name="android" spec="^6.3.0" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.3.1" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
 </widget>

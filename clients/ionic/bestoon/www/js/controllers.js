@@ -1,7 +1,5 @@
-angular.module('starter.controllers', [])
-
-
-  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory) {
+angular.module('starter.controllers', ['ionic'])
+  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory, ) {
     $scope.loggedin = false;
     $scope.tabTitle = 'ورود';
     token = storage.getItem('token');
@@ -80,7 +78,7 @@ angular.module('starter.controllers', [])
           });
         })
 
-        .controller('ExpenseCtrl', function($scope, $http, $state) {
+        .controller('ExpenseCtrl', function($scope, $http, $state, $ionicModal) {
           // With the new view caching in Ionic, Controllers are only called
           // when they are recreated or on app start, instead of every page change.
           // To listen for when this page is active (for example, to refresh data),
@@ -88,6 +86,57 @@ angular.module('starter.controllers', [])
           //
           //$scope.$on('$ionicView.enter', function(e) {
           //});
+
+          $ionicModal.fromTemplateUrl('expense-edit-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'            
+          }).then(function(modal) {
+            $scope.modal = modal;
+          });
+
+
+          $scope.openModal = function() {
+            $scope.modal.show();
+          };
+          $scope.submitExpenseModal = function() {
+            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            $http.post(
+                bestoonURL + '/edit/expense/',
+                'token=' + token + '&text=' + $scope.editexpense.text + '&amount=' + $scope.editexpense.amount + '&id=' + $scope.editexpense.pk
+              )
+              .success(function(data) {
+
+                // show a TOAST
+                $scope.modal.hide();
+                // update the expenses part, containing the new one
+                $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+                $http.post(bestoonURL + '/q/expenses/', 'token='+token).success(function(data) {
+                    $scope.expenses = JSON.parse(data);
+                  }).error(function() {
+                    $scope.message = 'erorr reading previous expenses' //TODO: show some error to user       console.log('error on request')
+                })
+              })
+              .error(function() {
+                $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
+                console.log('error while submitting expense')
+              })
+          };
+          $scope.closeModal = function() {
+            $scope.modal.hide();
+          };
+          // Cleanup the modal when we're done with it!
+          $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+          });
+          // Execute action on hide modal
+          $scope.$on('modal.hidden', function() {
+            // Execute action
+          });
+          // Execute action on remove modal
+          $scope.$on('modal.removed', function() {
+            // Execute action
+          });
+
           $scope.$on('$ionicView.enter', function(e) {
             if (!token) {
               back_to_login_page($scope, $state);
@@ -104,7 +153,11 @@ angular.module('starter.controllers', [])
           $scope.listCanSwipe = true
 
           $scope.edit = function(item) {
-            console.log('we are in edit for expense item '+item.pk);
+            $scope.modal_edit_amount = item.fields.amount;
+            $scope.modal_edit_text = item.fields.text;
+            $scope.modal_edit_pk = item.pk;
+            $scope.editexpense = {amount: item.fields.amount, pk: item.pk, text: item.fields.text}
+            $scope.modal.show();
           }
 
           $scope.delete = function(item) {
@@ -149,7 +202,59 @@ angular.module('starter.controllers', [])
           $scope.expense = Expense.get($stateParams.expenseId);
         })
 
-        .controller('IncomeCtrl', function($scope, $http, $state) {
+        .controller('IncomeCtrl', function($scope, $http, $state, $ionicModal) {
+
+          $ionicModal.fromTemplateUrl('income-edit-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'            
+          }).then(function(modal) {
+            $scope.modal = modal;
+          });
+
+
+          $scope.openModal = function() {
+            $scope.modal.show();
+          };
+          $scope.submitIncomeModal = function() {
+            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            $http.post(
+                bestoonURL + '/edit/income/',
+                'token=' + token + '&text=' + $scope.editincome.text + '&amount=' + $scope.editincome.amount + '&id=' + $scope.editincome.pk
+              )
+              .success(function(data) {
+
+                // show a TOAST
+                $scope.modal.hide();
+                // update the expenses part, containing the new one
+                $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+                $http.post(bestoonURL + '/q/incomes/', 'token='+token).success(function(data) {
+                    $scope.incomes = JSON.parse(data);
+                  }).error(function() {
+                    $scope.message = 'erorr reading previous incomes' //TODO: show some error to user       console.log('error on request')
+                })
+              })
+              .error(function() {
+                $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
+                console.log('error while submitting expense')
+              })
+          };
+          $scope.closeModal = function() {
+            $scope.modal.hide();
+          };
+          // Cleanup the modal when we're done with it!
+          $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+          });
+          // Execute action on hide modal
+          $scope.$on('modal.hidden', function() {
+            // Execute action
+          });
+          // Execute action on remove modal
+          $scope.$on('modal.removed', function() {
+            // Execute action
+          });
+
+
           $scope.$on('$ionicView.enter', function(e) {
             if (!token) {
               back_to_login_page($scope, $state);
@@ -159,7 +264,11 @@ angular.module('starter.controllers', [])
             $scope.listCanSwipe = true
 
             $scope.edit = function(item) {
-              console.log('we are in edit for income item '+item.pk);
+              $scope.modal_edit_amount = item.fields.amount;
+              $scope.modal_edit_text = item.fields.text;
+              $scope.modal_edit_pk = item.pk;
+              $scope.editincome = {amount: item.fields.amount, pk: item.pk, text: item.fields.text}
+              $scope.modal.show();
             }
 
             $scope.delete = function(item) {
