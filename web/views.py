@@ -71,14 +71,14 @@ def register(request):
         # is this spam? check reCaptcha
         if not grecaptcha_verify(request):  # captcha was not correct
             context = {
-                'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
+                'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید.', 'username':request.POST['username'], 'password':request.POST['password'],'email':request.POST['email']}  
             return render(request, 'register.html', context)
 
         # duplicate email
         if User.objects.filter(email=request.POST['email']).exists():
             context = {
-                'message': 'متاسفانه این ایمیل قبلا استفاده شده است. در صورتی که این ایمیل شما است، از صفحه ورود گزینه فراموشی پسورد رو انتخاب کنین. ببخشید که فرم ذخیره نشده. درست می شه'}  # TODO: forgot password
-            # TODO: keep the form data
+                'message': 'متاسفانه این ایمیل قبلا استفاده شده است. در صورتی که این ایمیل شما است، از صفحه ورود گزینه فراموشی پسورد رو انتخاب کنین. ','username':request.POST['username'], 'password':request.POST['password']}  
+            
             return render(request, 'register.html', context)
         # if user does not exists
         if not User.objects.filter(username=request.POST['username']).exists():
