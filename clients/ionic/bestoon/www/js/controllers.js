@@ -1,5 +1,5 @@
-angular.module('starter.controllers', ['ionic'])
-  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory, ) {
+angular.module('starter.controllers', ['ionic', 'ionic-toast'])
+  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory, ionicToast) {
     $scope.loggedin = false;
     $scope.tabTitle = 'ورود';
     token = storage.getItem('token');
@@ -26,8 +26,7 @@ angular.module('starter.controllers', ['ionic'])
               })
             })
           } else {
-            // request was fine, but error on username / password
-            // TODO: toast message about failed login
+            ionicToast.show("نام کاربری یا رمز عبور اشتباه است", 'bottom', true, 1500);
           }
         })
         .error(function() {
