@@ -9,5 +9,7 @@
     "www/**/*",
     "!www/lib/**/*",
     "!www/**/*.map"
-  ]
+  ],
+  "integrations": {},
+  "type": "ionic1"
 }
