@@ -1,4 +1,32 @@
 <ion-view view-title="ثبت درآمد">
+
+    <script id="income-edit-modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">ویرایش درآمد</h1>
+        </ion-header-bar>
+        <ion-content>
+          <form ng-submit="submitIncomeModal()">
+  
+              <div class="list">
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">درآمد به تومان</span>
+                    <input type="number"  ng-model="editincome.amount" value="{{modal_edit_amount}}"> 
+                  </label>
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">موضوع هزینه</span>
+                    <input type="text"  ng-model="editincome.text" value="{{modal_edit_text}}">
+                    <input type=hidden ng-model="editincome.pk" value="{{modal_edit_pk}}">
+                  </label>
+                </div>
+                <button class="button button-positive">
+                  به روز رسانی
+                </button>
+          </form>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+
   <ion-content ng-controller="IncomeCtrl">
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="thisexpense in expense" type="item-text-wrap" href="#/tab/expense/{{expense.id}}">
