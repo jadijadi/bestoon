@@ -34,9 +34,10 @@ random_str = lambda N: ''.join(
 
 @csrf_exempt
 def news(request):
-    news = News.objects.all().order_by('-date')[:11]
-    news_serialized = serializers.serialize("json", news)
-    return JsonResponse(news_serialized, encoder=JSONEncoder, safe=False)
+    JSONEncoder.default = lambda self, obj: (obj.isoformat() if isinstance(obj, datetime) else None)
+    news_list = list(News.objects.all().order_by('-date')[:11].values())
+    # news_serialized = serializers.serialize("json", news_object)
+    return JsonResponse({'news': news_list}, encoder=JSONEncoder)
 
 
 @csrf_exempt
@@ -167,9 +168,10 @@ def query_expenses(request):
     this_token = request.POST['token']
     num = request.POST.get('num', 10)
     this_user = get_object_or_404(User, token__token=this_token)
-    expenses = Expense.objects.filter(user=this_user).order_by('-date')[:num]
-    expenses_serialized = serializers.serialize("json", expenses)
-    return JsonResponse(expenses_serialized, encoder=JSONEncoder, safe=False)
+    JSONEncoder.default = lambda self, obj: (obj.isoformat() if isinstance(obj, datetime) else None)
+    expenses_list =list( Expense.objects.filter(user=this_user).order_by('-date')[:num])
+    #expenses_serialized = serializers.serialize("json", expenses)
+    return JsonResponse({'expenses': expenses_list}, encoder=JSONEncoder)
 
 
 @csrf_exempt
@@ -178,9 +180,10 @@ def query_incomes(request):
     this_token = request.POST['token']
     num = request.POST.get('num', 10)
     this_user = get_object_or_404(User, token__token=this_token)
-    incomes = Income.objects.filter(user=this_user).order_by('-date')[:num]
-    incomes_serialized = serializers.serialize("json", incomes)
-    return JsonResponse(incomes_serialized, encoder=JSONEncoder, safe=False)
+    JSONEncoder.default = lambda self, obj: (obj.isoformat() if isinstance(obj, datetime) else None)
+    incomes_list = list(Income.objects.filter(user=this_user).order_by('-date')[:num])
+    # expenses_serialized = serializers.serialize("json", expenses)
+    return JsonResponse({'expenses': incomes_list}, encoder=JSONEncoder)
 
 
 @csrf_exempt
@@ -220,7 +223,7 @@ def edit_expense(request):
     this_pk = request.POST['id'] if 'id' in request.POST else "-1"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
-    
+
     this_expense = get_object_or_404(Expense, pk=this_pk, user=this_user)
     this_expense.text = this_text
     this_expense.amount = this_amount
@@ -232,7 +235,7 @@ def edit_expense(request):
 @csrf_exempt
 @require_POST
 def edit_income(request):
-    """ edit an income """    
+    """ edit an income """
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
     this_pk = request.POST['id'] if 'id' in request.POST else "0"
