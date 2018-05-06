@@ -183,7 +183,7 @@ def query_incomes(request):
     JSONEncoder.default = lambda self, obj: (obj.isoformat() if isinstance(obj, datetime) else None)
     incomes_list = list(Income.objects.filter(user=this_user).order_by('-date')[:num])
     # expenses_serialized = serializers.serialize("json", expenses)
-    return JsonResponse({'expenses': incomes_list}, encoder=JSONEncoder)
+    return JsonResponse({'incomes': incomes_list}, encoder=JSONEncoder)
 
 
 @csrf_exempt
