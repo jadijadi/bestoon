@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
-from django.utils.crypto import get_random_string
-from django.db import models
-from django.contrib.auth.models import User
 
+from django.contrib.auth.models import User
+from django.db import models
 
 
 class News(models.Model):
@@ -35,7 +34,7 @@ class Expense(models.Model):
     user = models.ForeignKey(User)
 
     def isoformat(self):
-        return {'text': self.text, 'amount': self.amount, 'date': self.date}
+        return {'id': self.pk, 'text': self.text, 'amount': self.amount, 'date': self.date}
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
@@ -48,7 +47,7 @@ class Income(models.Model):
     user = models.ForeignKey(User)
 
     def isoformat(self):
-        return {'text': self.text, 'amount': self.amount, 'date': self.date}
+        return {'id': self.pk, 'text': self.text, 'amount': self.amount, 'date': self.date}
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
