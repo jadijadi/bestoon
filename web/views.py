@@ -21,11 +21,11 @@ from .models import User, Token, Expense, Income, Passwordresetcodes, News
 # Create your views here.
 from postmark import PMMail
 
-from .utils import grecaptcha_verify, RateLimited
+from .utils import grecaptcha_verify, RateLimited,CustomJSONEncoder
 
 # create random string for Toekn
-random_str = lambda N: ''.join(
-    random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
+#random_str = lambda N: ''.join(
+#    random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
 
 # login , (API) , returns : JSON = statuns (ok|error) and token
@@ -34,9 +34,8 @@ random_str = lambda N: ''.join(
 
 @csrf_exempt
 def news(request):
-    news = News.objects.all().order_by('-date')[:11]
-    news_serialized = serializers.serialize("json", news)
-    return JsonResponse(news_serialized, encoder=JSONEncoder, safe=False)
+    news_list = list(News.objects.all().order_by('-date')[:11].values())
+    return JsonResponse({'news': news_list}, encoder=CustomJSONEncoder)
 
 
 @csrf_exempt
@@ -167,9 +166,8 @@ def query_expenses(request):
     this_token = request.POST['token']
     num = request.POST.get('num', 10)
     this_user = get_object_or_404(User, token__token=this_token)
-    expenses = Expense.objects.filter(user=this_user).order_by('-date')[:num]
-    expenses_serialized = serializers.serialize("json", expenses)
-    return JsonResponse(expenses_serialized, encoder=JSONEncoder, safe=False)
+    expenses_list = list(Expense.objects.filter(user=this_user).order_by('-date')[:num])
+    return JsonResponse({'expenses': expenses_list}, encoder=CustomJSONEncoder)
 
 
 @csrf_exempt
@@ -178,9 +176,8 @@ def query_incomes(request):
     this_token = request.POST['token']
     num = request.POST.get('num', 10)
     this_user = get_object_or_404(User, token__token=this_token)
-    incomes = Income.objects.filter(user=this_user).order_by('-date')[:num]
-    incomes_serialized = serializers.serialize("json", incomes)
-    return JsonResponse(incomes_serialized, encoder=JSONEncoder, safe=False)
+    incomes_list = list(Income.objects.filter(user=this_user).order_by('-date')[:num])
+    return JsonResponse({'incomes': incomes_list}, encoder=CustomJSONEncoder)
 
 
 @csrf_exempt

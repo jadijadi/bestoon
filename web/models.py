@@ -34,6 +34,9 @@ class Expense(models.Model):
     amount = models.BigIntegerField()
     user = models.ForeignKey(User)
 
+    def isoformat(self):
+        return {'text': self.text, 'amount': self.amount, 'date': self.date}
+
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
 
@@ -43,6 +46,9 @@ class Income(models.Model):
     date = models.DateTimeField()
     amount = models.BigIntegerField()
     user = models.ForeignKey(User)
+
+    def isoformat(self):
+        return {'text': self.text, 'amount': self.amount, 'date': self.date}
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)

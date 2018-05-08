@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import time
+from datetime import datetime
+from json import JSONEncoder
+
 import requests
 from django.conf import settings
-import time
+
+from .models import Income, Expense
 
 
 def RateLimited(maxPerSecond):  # a decorator. @RateLimited(10) will let 10 runs in 1 seconds
@@ -44,3 +49,11 @@ def grecaptcha_verify(request):
     verify_rs = requests.get(url, params=params, verify=True)
     verify_rs = verify_rs.json()
     return verify_rs.get("success", False)
+
+
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime, Expense, Income)):
+            return obj.isoformat()
+        else:
+            return JSONEncoder.default(self, obj)
