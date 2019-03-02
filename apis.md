@@ -37,3 +37,18 @@
   POST, returns json
   input: token, num (optional, default is 10)
   output: last num  expenses
+
+/edit/income/
+  POST, return a json
+  input: text, amount, id, token
+  output: status: ok
+
+/edit/expense/
+  POST, return a json
+  input: text, amount, id, token
+  output: status: ok
+
+
+/news/
+  POST, return a json
+  output: json
