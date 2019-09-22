@@ -1,7 +1,7 @@
 
 # Bestoon
 
-A simple Income and Expense system.
+jadijadi. thank you for your pack on faradars. that is a good and funny learn for me!
 
 ## How to run
 
