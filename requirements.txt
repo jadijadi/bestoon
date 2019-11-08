@@ -1,4 +1,4 @@
-Django==1.11.9
+Django==1.11.23
 python-postmark==0.4.10
 requests==2.12.4
 django-cors-middleware
