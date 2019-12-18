@@ -1,4 +1,11 @@
-Django==1.11.23
-python-postmark==0.4.10
-requests==2.12.4
-django-cors-middleware
+asgiref==3.2.3
+certifi==2019.11.28
+chardet==3.0.4
+Django==3.0
+django-cors-middleware==1.5.0
+idna==2.8
+python-postmark==0.5.1
+pytz==2019.3
+requests==2.22.0
+sqlparse==0.3.0
+urllib3==1.25.7
