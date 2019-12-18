@@ -100,4 +100,4 @@ ENV/
 
 bestoon/settings.py
 *.orig
-.DS_Store
+*.DS_Store
