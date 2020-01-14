@@ -43,7 +43,7 @@ def news(request):
 @require_POST
 def login(request):
     # check if POST objects has username and password
-    if request.POST.has_key('username') and request.POST.has_key('password'):
+    if 'username' in request.POST and 'password' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
         this_user = get_object_or_404(User, username=username)
@@ -66,13 +66,12 @@ def login(request):
 
 
 def register(request):
-    if request.POST.has_key(
-            'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
+    if 'requestcode' in request.POST:  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
         # is this spam? check reCaptcha
-        if not grecaptcha_verify(request):  # captcha was not correct
-            context = {
-                'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
-            return render(request, 'register.html', context)
+        # if not grecaptcha_verify(request):  # captcha was not correct
+        #     context = {
+        #         'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
+        #     return render(request, 'register.html', context)
 
         # duplicate email
         if User.objects.filter(email=request.POST['email']).exists():
@@ -110,7 +109,7 @@ def register(request):
                 'message': 'متاسفانه این نام کاربری قبلا استفاده شده است. از نام کاربری دیگری استفاده کنید. ببخشید که فرم ذخیره نشده. درست می شه'}  # TODO: forgot password
             # TODO: keep the form data
             return render(request, 'register.html', context)
-    elif request.GET.has_key('code'):  # user clicked on code
+    elif 'code' in request.GET:  # user clicked on code
         code = request.GET['code']
         if Passwordresetcodes.objects.filter(
                 code=code).exists():  # if code is in temporary db, read the data and create the user
@@ -140,7 +139,7 @@ def register(request):
 @csrf_exempt
 @require_POST
 def whoami(request):
-    if request.POST.has_key('token'):
+    if 'token' in request.POST:
         this_token = request.POST['token']  # TODO: Check if there is no `token`- done-please Check it
         # Check if there is a user with this token; will retun 404 instead.
         this_user = get_object_or_404(User, token__token=this_token)
@@ -220,7 +219,7 @@ def edit_expense(request):
     this_pk = request.POST['id'] if 'id' in request.POST else "-1"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
-    
+
     this_expense = get_object_or_404(Expense, pk=this_pk, user=this_user)
     this_expense.text = this_text
     this_expense.amount = this_amount
@@ -232,7 +231,7 @@ def edit_expense(request):
 @csrf_exempt
 @require_POST
 def edit_income(request):
-    """ edit an income """    
+    """ edit an income """
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
     this_pk = request.POST['id'] if 'id' in request.POST else "0"
@@ -250,6 +249,42 @@ def edit_income(request):
 
 # submit an income to system (api) , input : token(POST) , output : status
 # = (ok)
+
+@csrf_exempt
+@require_POST
+def remove_expense(request):
+    """ remove an expense """
+    this_pk = request.POST['id'] if 'id' in request.POST else "0"
+    this_token = request.POST['token'] if 'token' in request.POST else ""
+    this_user = get_object_or_404(User, token__token=this_token)
+
+    this_expense = get_object_or_404(Expense, pk=this_pk, user=this_user)
+    this_expense.delete()
+    return JsonResponse({
+        'status': 'ok',
+    }, encoder=JSONEncoder)
+
+# submit an income to system (api) , input : token(POST) , output : status
+# = (ok)
+
+
+@csrf_exempt
+@require_POST
+def remove_income(request):
+    """ remove an income """
+    this_pk = request.POST['id'] if 'id' in request.POST else "0"
+    this_token = request.POST['token'] if 'token' in request.POST else ""
+    this_user = get_object_or_404(User, token__token=this_token)
+
+    this_income = get_object_or_404(Income, pk=this_pk, user=this_user)
+    this_income.delete()
+    return JsonResponse({
+        'status': 'ok',
+    }, encoder=JSONEncoder)
+
+# submit an income to system (api) , input : token(POST) , output : status
+# = (ok)
+
 @csrf_exempt
 @require_POST
 def submit_income(request):
