@@ -1,0 +1,17 @@
+kind: ExternalService
+name: bestoon
+spec:
+  image_pull_policy: Always
+  port: 80
+  source:
+    context: .
+    media_path: ''
+    project_type: django
+    python_version: '3.7'
+    static_path: static
+    wsgi: bestoon.wsgi
+  # volume_mounts:
+  #   - mount_path: /usr/src/app/bestoon/static
+  #     sub_path: static
+  domains:
+    - name: rayakade.ir
