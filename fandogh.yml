@@ -10,8 +10,8 @@ spec:
     python_version: '3.7'
     static_path: static
     wsgi: bestoon.wsgi
-  # volume_mounts:
-  #   - mount_path: /usr/src/app/bestoon/static
-  #     sub_path: static
+  volume_mounts:
+    - mount_path: /usr/src/app/bestoon/web/static/
+      sub_path: static
   domains:
     - name: rayakade.ir
