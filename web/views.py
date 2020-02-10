@@ -15,6 +15,7 @@ from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
 
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
 
@@ -94,14 +95,11 @@ def register(request):
             temporarycode = Passwordresetcodes(
                 email=email, time=now, code=code, username=username, password=password)
             temporarycode.save()
-            #message = PMMail(api_key=settings.POSTMARK_API_TOKEN,
-            #                 subject="فعالسازی اکانت بستون",
-            #                 sender="jadi@jadi.net",
-            #                 to=email,
-            #                 text_body=" برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(
-            #                     request.build_absolute_uri('/accounts/register/'), code),
-            #                 tag="account request")
-            #message.send()
+
+            send_mail("فعالسازی اکانت بستون",
+                " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(
+                    request.build_absolute_uri('/accounts/register/'), code)
+                , 'info@rayakade.ir', [email], fail_silently = False)
             message = 'ایمیلی حاوی لینک فعال سازی اکانت به شما فرستاده شده، لطفا پس از چک کردن ایمیل، روی لینک کلیک کنید.'
             message = 'قدیم ها ایمیل فعال سازی می فرستادیم ولی الان شرکتش ما رو تحریم کرده (: پس راحت و بی دردسر'
             body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: <a href=\"{}?code={}\">لینک رو به رو</a> ".format(request.build_absolute_uri('/accounts/register/'), code)
