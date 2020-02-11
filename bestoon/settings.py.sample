@@ -125,10 +125,10 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'web/static')
 STATIC_URL = '/static/'
 
 
-
-
-RECAPTCHA_SECRET_KEY = ''
-POSTMARK_API_TOKEN=''
+RECAPTCHA_PRIVATE_KEY = 'your private key'
+RECAPTCHA_PUBLIC_KEY = 'your public key'
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5
 
 EMAIL_HOST = ''
 EMAIL_USE_TLS = True

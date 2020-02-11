@@ -16,13 +16,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
 from django.core.mail import send_mail
-
+from django.forms import Form
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
 
 # Create your views here.
-from postmark import PMMail
 
-from .utils import grecaptcha_verify, RateLimited
+from .utils import RateLimited
+# from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
 # create random string for Toekn
 random_str = lambda N: ''.join(
@@ -69,15 +69,17 @@ def login(request):
 
 
 def register(request):
-
+    # class RecaptchaTestForm(Form):
+    #     recaptcha = ReCaptchaField(score_threshold=0.4)
+    # form = RecaptchaTestForm({"g-recaptcha-response": "dummy token"})
     keys = list(request.POST.keys())
     keys_get = list(request.GET.keys())
     if 'requestcode' in keys:  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
-        # is this spam? check reCaptcha
-        if not grecaptcha_verify(request):  # captcha was not correct
-            context = {
-                'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
-            return render(request, 'register.html', context)
+    #     # is this spam? check reCaptcha
+    #     if not form.is_valid():  # captcha was not correct
+    #         context = {
+    #             'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
+    #         return render(request, 'register.html', context)
 
         # duplicate email
         if User.objects.filter(email=request.POST['email']).exists():
