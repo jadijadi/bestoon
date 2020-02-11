@@ -104,8 +104,6 @@ def register(request):
                 , 'info@rayakade.ir', [email], fail_silently = False)
             message = 'ایمیلی حاوی لینک فعال سازی اکانت به شما فرستاده شده، لطفا پس از چک کردن ایمیل، روی لینک کلیک کنید.'
 
-            body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: <a href=\"{}?code={}\">لینک رو به رو</a> ".format(request.build_absolute_uri('/accounts/register/'), code)
-            message = message + body
             context = {
                 'message': message }
             return render(request, 'index.html', context)
