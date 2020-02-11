@@ -69,17 +69,9 @@ def login(request):
 
 
 def register(request):
-    # class RecaptchaTestForm(Form):
-    #     recaptcha = ReCaptchaField(score_threshold=0.4)
-    # form = RecaptchaTestForm({"g-recaptcha-response": "dummy token"})
     keys = list(request.POST.keys())
     keys_get = list(request.GET.keys())
     if 'requestcode' in keys:  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
-    #     # is this spam? check reCaptcha
-    #     if not form.is_valid():  # captcha was not correct
-    #         context = {
-    #             'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
-    #         return render(request, 'register.html', context)
 
         # duplicate email
         if User.objects.filter(email=request.POST['email']).exists():
