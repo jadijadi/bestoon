@@ -46,6 +46,9 @@ To run tests in Bestoon simply use `python manage.py test`.
 
 If you want more verbosity you can use `-v` option with `0, 1, 2, or 3.`; e.g. `python manage.py test -v2`
 
+## API
+Click [HERE](./apis.md) to Learn More.
+
 ## More Clients
 
 The project contains two different clients (command line and an ionic app for android/iOS) but all the 3rd party clients are more than welcomed. Add yours below.
@@ -60,7 +63,6 @@ The project contains two different clients (command line and an ionic app for an
 - [Bestoon Telegram Bot Client](https://github.com/MojtabaMonfared/BestoonClient)
 - [BestoonMsn, a native Android client for Bestoon](https://github.com/theOneWithMind/BestoonMsn)
 - [Bestoon php client](https://github.com/iamalirezaj/bestoon-php-client)
-
 
 
 ## TODO
