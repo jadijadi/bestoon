@@ -50,6 +50,32 @@ def get_token():
         print(err)
         exit(0)
 
+def edit_token():
+    open("token.bestoon-cli.txt","a")
+    with open("token.bestoon-cli.txt","r") as f:
+        data = f.read().splitlines()
+    if data != []:
+        this_token = input("OK Enter New TOKEN \> ")
+        if len(this_token) < 40 and this_token != "test":
+            while True:
+                this_token = input("Enter token (q for Quit)\> ")
+                if len(this_token) > 40:
+                    break
+                elif this_token == "test":
+                    break
+                elif this_token == "q":
+                    exit(0)
+                else:
+                    pass
+            with open("token.bestoon-cli.txt","w") as f:
+                f.write(this_token)
+        else:
+            print("token edited")
+            with open("token.bestoon-cli.txt","w") as f:
+                f.write(this_token)
+    else:
+        print("YOU NOT TOKEN :(")
+
 def Income(token):
     url = BASE_URL+"p/1/"
     amount = input("Enter amount /> ")
@@ -75,13 +101,17 @@ def main():
     argvs = sys.argv
     if len(argvs) <= 1:
         help_text()
-    elif "help" in argvs:
+    elif argvs[1] == "help":
         help_text()
-    elif "-i" in argvs:
-        Income()
-    elif "-g" in argvs:
+    elif argvs[1] == "-i":
+        Income(token)
+    elif argvs[1] == "-g":
         help_text()
-    elif "-e" in argvs:
+    elif argvs[1] == "-e":
+        help_text()
+    elif argvs[1] == "--edit":
+        edit_token()
+    else:
         help_text()
 
 if __name__ == "__main__":
