@@ -17,7 +17,8 @@ def help_text():
     metods:
     -i : Record Income
     -e : Record Expense 
-    -g : Get generalstat 
+    -g : Get generalstat
+    --edit :  Edit Your Token
     """
     print(text)
 
