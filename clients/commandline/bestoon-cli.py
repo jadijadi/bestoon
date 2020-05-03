@@ -21,9 +21,37 @@ def help_text():
     """
     print(text)
 
-def Income():
+def get_token():
+    try:
+        open("token.bestoon-cli.txt","a")
+        with open("token.bestoon-cli.txt","r") as f:
+            data = f.read().splitlines()
+        if data == []:
+            this_token = input("Enter token \> ")
+            if len(this_token) < 40 and this_token != "test":
+                while True:
+                    this_token = input("Enter token (q for Quit)\> ")
+                    if len(this_token) > 40:
+                        break
+                    elif this_token == "test":
+                        break
+                    elif this_token == "q":
+                        exit(0)
+                    else:
+                        pass
+            else:
+                print("you token saved to file token.bestoon-cli.txt")
+                with open("token.bestoon-cli.txt","w") as f:
+                    f.write(this_token)
+        else:
+            this_token = data[0]
+        return this_token
+    except Exception as err:
+        print(err)
+        exit(0)
+
+def Income(token):
     url = BASE_URL+"p/1/"
-    token = "test" 
     amount = input("Enter amount /> ")
     if amount.isnumeric():
         amount = int(amount)
@@ -43,6 +71,7 @@ def Income():
 
 def main():
     clear_terminal()
+    token = get_token()
     argvs = sys.argv
     if len(argvs) <= 1:
         help_text()
