@@ -1,6 +1,6 @@
 import requests, sys, os
 
-BASE_URL = "http://127.0.0.1:8009/"
+BASE_URL = "https://bestoon.ir"
 
 def clear_terminal():
     if sys.platform == "linux" or "linux2":
@@ -77,24 +77,52 @@ def edit_token():
     else:
         print("YOU NOT TOKEN :(")
 
-def Income(token):
-    url = BASE_URL+"p/1/"
-    amount = input("Enter amount /> ")
-    if amount.isnumeric():
-        amount = int(amount)
-    else:
-        while True:
-            amount = input("Enter amount (only number) /> ")
-            if amount.isnumeric():
-                amount = int(amount)
-                break
-    text = input("Enter Text \> ")
-    heder = {"token":token,"amount":amount,"text":text}
-    message = requests.post(url,heder)
-    print(message)
+def income(token):
+    try:
+        url = BASE_URL+"/submit/income/"
+        amount = input("[Income] Enter amount /> ")
+        if amount.isnumeric():
+            amount = int(amount)
+        else:
+            while True:
+                amount = input("Enter amount (only number) /> ")
+                if amount.isnumeric():
+                    amount = int(amount)
+                    break
+        text = input("Enter Text \> ")
+        heder = {"token":token,"amount":amount,"text":text}
+        message = requests.post(url,heder)
+        print(message)
+    except Exception as err:
+        print(err)
     
+def expense(token):
+    try:
+        url = BASE_URL+"/submit/expense/"
+        amount = input("[Expense] Enter amount /> ")
+        if amount.isnumeric():
+            amount = int(amount)
+        else:
+            while True:
+                amount = input("Enter amount (only number) /> ")
+                if amount.isnumeric():
+                    amount = int(amount)
+                    break
+        text = input("[Expense] Enter Text \> ")
+        heder = {"token":token,"amount":amount,"text":text}
+        message = requests.post(url,heder)
+        print(message)
+    except Exception as err:
+        print(err)
 
-# curl --data "token=$TOKEN&=$AMOUNT&=$TEXT" $BASE_URL/submit/expense/
+def generalstat(token):
+    try:
+        url = BASE_URL+"/q/generalstat/"
+        heder = {"token":token}
+        message = requests.post(url,heder)
+        print(message)
+    except Exception as err:
+        print(err)
 
 def main():
     clear_terminal()
@@ -105,11 +133,11 @@ def main():
     elif argvs[1] == "help":
         help_text()
     elif argvs[1] == "-i":
-        Income(token)
+        income(token)
     elif argvs[1] == "-g":
-        help_text()
+        generalstat(token)
     elif argvs[1] == "-e":
-        help_text()
+        expense(token)
     elif argvs[1] == "--edit":
         edit_token()
     else:
