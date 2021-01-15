@@ -101,3 +101,4 @@ ENV/
 bestoon/settings.py
 *.orig
 .DS_Store
+.vscode/settings.json
