@@ -1,5 +1,5 @@
 angular.module('starter.controllers', ['ionic'])
-  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory, ) {
+  .controller('ConfigCtrl', function($scope, $http, $state, $ionicHistory, $ionicLoading) {
     $scope.loggedin = false;
     $scope.tabTitle = 'ورود';
     token = storage.getItem('token');
@@ -28,11 +28,14 @@ angular.module('starter.controllers', ['ionic'])
           } else {
             // request was fine, but error on username / password
             // TODO: toast message about failed login
+            $ionicLoading.show({ template: 'در ورود مشکلی پیش آمده است. لطفا نام کاربری و کلمه عبور را چک کنید', noBackdrop: true, duration: 2200 });
+
           }
         })
         .error(function() {
           $scope.message = 'erorr logging in' //TODO: show some error to user
           console.log('error on login request')
+          $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
         })
     }
 
@@ -55,6 +58,8 @@ angular.module('starter.controllers', ['ionic'])
           $scope.news = JSON.parse(data);
         }).error(function() {
           $scope.message = 'erorr reading news' //TODO: show some error to user       console.log('error on request')
+          $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
         })
       })
   })
@@ -74,6 +79,8 @@ angular.module('starter.controllers', ['ionic'])
               .error(function() {
                 $scope.message = 'erorr reading from bestoon stats' //TODO: show some error to user
                 console.log('error on request')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
               })
           });
         })
@@ -89,7 +96,7 @@ angular.module('starter.controllers', ['ionic'])
 
           $ionicModal.fromTemplateUrl('expense-edit-modal.html', {
             scope: $scope,
-            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'            
+            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'
           }).then(function(modal) {
             $scope.modal = modal;
           });
@@ -107,6 +114,8 @@ angular.module('starter.controllers', ['ionic'])
               .success(function(data) {
 
                 // show a TOAST
+                $scope.message = 'اطلاعات ذخیره شد'
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
                 $scope.modal.hide();
                 // update the expenses part, containing the new one
                 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -114,11 +123,13 @@ angular.module('starter.controllers', ['ionic'])
                     $scope.expenses = JSON.parse(data);
                   }).error(function() {
                     $scope.message = 'erorr reading previous expenses' //TODO: show some error to user       console.log('error on request')
-                })
+                    $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+                  })
               })
               .error(function() {
                 $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
                 console.log('error while submitting expense')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
               })
           };
           $scope.closeModal = function() {
@@ -146,6 +157,8 @@ angular.module('starter.controllers', ['ionic'])
                 $scope.expenses = JSON.parse(data);
               }).error(function() {
                 $scope.message = 'erorr reading previous expenses' //TODO: show some error to user       console.log('error on request')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
             })
           })
 
@@ -174,19 +187,25 @@ angular.module('starter.controllers', ['ionic'])
               .success(function(data) {
                 $scope.text = '';
                 $scope.amount = '';
+                
                 // show a TOAST
-
+                $scope.message = 'اطلاعات ذخیره شد'
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
                 // update the expenses part, containing the new one
                 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
                 $http.post(bestoonURL + '/q/expenses/', 'token='+token).success(function(data) {
                     $scope.expenses = JSON.parse(data);
                   }).error(function() {
                     $scope.message = 'erorr reading previous expenses' //TODO: show some error to user       console.log('error on request')
+                    $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
                 })
               })
               .error(function() {
                 $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
                 console.log('error while submitting expense')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
               })
           }
 
@@ -206,7 +225,7 @@ angular.module('starter.controllers', ['ionic'])
 
           $ionicModal.fromTemplateUrl('income-edit-modal.html', {
             scope: $scope,
-            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'            
+            animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'
           }).then(function(modal) {
             $scope.modal = modal;
           });
@@ -224,6 +243,8 @@ angular.module('starter.controllers', ['ionic'])
               .success(function(data) {
 
                 // show a TOAST
+                $scope.message = 'اطلاعات ذخیره شد'
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
                 $scope.modal.hide();
                 // update the expenses part, containing the new one
                 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -231,11 +252,15 @@ angular.module('starter.controllers', ['ionic'])
                     $scope.incomes = JSON.parse(data);
                   }).error(function() {
                     $scope.message = 'erorr reading previous incomes' //TODO: show some error to user       console.log('error on request')
+                    $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
                 })
               })
               .error(function() {
                 $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
                 console.log('error while submitting expense')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
               })
           };
           $scope.closeModal = function() {
@@ -280,6 +305,8 @@ angular.module('starter.controllers', ['ionic'])
                 $scope.incomes = JSON.parse(data);
               }).error(function() {
                 $scope.message = 'erorr reading previous incomes' //TODO: show some error to user       console.log('error on request')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
             })
           })
 
@@ -293,18 +320,23 @@ angular.module('starter.controllers', ['ionic'])
                 $scope.text = '';
                 $scope.amount = '';
                 // show a TOAST
-
+                $scope.message = 'اطلاعات ذخیره شد'
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
                 // update the incomes part, containing the new one
                 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
                 $http.post(bestoonURL + '/q/incomes/', 'token='+token).success(function(data) {
                     $scope.incomes = JSON.parse(data);
                   }).error(function() {
                     $scope.message = 'erorr reading previous incomes' //TODO: show some error to user       console.log('error on request')
+                    $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
                 })
               })
               .error(function() {
                 $scope.message = 'خطا در ذخیره اطلاعات. بعدا دوباره تلاش کنید' //TODO: show some error to user
                 console.log('error while submitting income')
+                $ionicLoading.show({ template: $scope.message, noBackdrop: true, duration: 2200 });
+
               })
           }
         })
