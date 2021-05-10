@@ -9,7 +9,7 @@ class News(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField()
     date = models.DateTimeField()
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 class Passwordresetcodes(models.Model):
@@ -24,7 +24,7 @@ class Token(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=48)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}_token".format(self.user)
 
 
@@ -34,7 +34,7 @@ class Expense(models.Model):
     amount = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
 
 
@@ -44,5 +44,5 @@ class Income(models.Model):
     amount = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
