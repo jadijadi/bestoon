@@ -14,7 +14,7 @@
   "devDependencies": {
     "bower": "^1.8.8",
     "gulp-util": "^2.2.14",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.8.5"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
