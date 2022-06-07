@@ -31,7 +31,7 @@ If You're On A Windows Machine , Make Environment Ready By Following Steps Below
 3. Make Environment Ready Like This:
 ``` Command Prompt
 cd bestoon
-virutalenv -p "PATH\TO\Python.exe" build # Give Full Path To python.exe
+virtualenv -p "PATH\TO\Python.exe" build # Give Full Path To python.exe
 build\Scripts\activate # Activate The Virutal Environment
 pip install -r requirements.txt
 move bestoon\settings.py.sample bestoon/settings.py
