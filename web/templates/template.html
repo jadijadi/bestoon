@@ -1,4 +1,5 @@
-{% load staticfiles %}
+{% load static %}
+{% load recaptcha3 %}
 <!DOCTYPE html>
 <html  class="no-js" lang="fa" dir="rtl">
   <head>
@@ -17,11 +18,21 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"  crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
     <!-- Latest compiled and minified CSS -->
+    <script>
+        function alertToken(token) {
+            alert(token);
+        }
+    </script>
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
 
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 
+        <!--BEGIN RAYCHAT CODE-->
+          <script type="text/javascript">!function(){function t(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,localStorage.getItem("rayToken")?t.src="https://app.raychat.io/scripts/js/"+o+"?rid="+localStorage.getItem("rayToken")+"&href="+window.location.href:t.src="https://app.raychat.io/scripts/js/"+o;var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}var e=document,a=window,o="cc0948d3-e7ca-4739-a636-8665daafda59";"complete"==e.readyState?t():a.attachEvent?a.attachEvent("onload",t):a.addEventListener("load",t,!1)}();</script>
+        <!--END RAYCHAT CODE-->
   </head>
 
   <body>
@@ -42,7 +53,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="{% url 'index' %}">			                
+                    <a class="navbar-brand" href="{% url 'index' %}">
                       بستون
                     </a>
                 </div>

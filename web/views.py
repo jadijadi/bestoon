@@ -15,13 +15,14 @@ from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.http import require_POST
-
+from django.core.mail import send_mail
+from django.forms import Form
 from .models import User, Token, Expense, Income, Passwordresetcodes, News
 
 # Create your views here.
-from postmark import PMMail
 
-from .utils import grecaptcha_verify, RateLimited
+from .utils import RateLimited
+# from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
 # create random string for Toekn
 random_str = lambda N: ''.join(
@@ -43,7 +44,9 @@ def news(request):
 @require_POST
 def login(request):
     # check if POST objects has username and password
-    if request.POST.has_key('username') and request.POST.has_key('password'):
+    keys = list(request.POST.keys())
+
+    if ('username' in keys) and ('password' in keys):
         username = request.POST['username']
         password = request.POST['password']
         this_user = get_object_or_404(User, username=username)
@@ -66,13 +69,9 @@ def login(request):
 
 
 def register(request):
-    if request.POST.has_key(
-            'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
-        # is this spam? check reCaptcha
-        if not grecaptcha_verify(request):  # captcha was not correct
-            context = {
-                'message': 'کپچای گوگل درست وارد نشده بود. شاید ربات هستید؟ کد یا کلیک یا تشخیص عکس زیر فرم را درست پر کنید. ببخشید که فرم به شکل اولیه برنگشته!'}  # TODO: forgot password
-            return render(request, 'register.html', context)
+    keys = list(request.POST.keys())
+    keys_get = list(request.GET.keys())
+    if 'requestcode' in keys:  # form is filled. if not spam, generate code and save in db, wait for email confirmation, return message
 
         # duplicate email
         if User.objects.filter(email=request.POST['email']).exists():
@@ -90,18 +89,13 @@ def register(request):
             temporarycode = Passwordresetcodes(
                 email=email, time=now, code=code, username=username, password=password)
             temporarycode.save()
-            #message = PMMail(api_key=settings.POSTMARK_API_TOKEN,
-            #                 subject="فعالسازی اکانت بستون",
-            #                 sender="jadi@jadi.net",
-            #                 to=email,
-            #                 text_body=" برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(
-            #                     request.build_absolute_uri('/accounts/register/'), code),
-            #                 tag="account request")
-            #message.send()
+
+            send_mail("فعالسازی اکانت بستون",
+                " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: {}?code={}".format(
+                    request.build_absolute_uri('/accounts/register/'), code)
+                , 'info@rayakade.ir', [email], fail_silently = False)
             message = 'ایمیلی حاوی لینک فعال سازی اکانت به شما فرستاده شده، لطفا پس از چک کردن ایمیل، روی لینک کلیک کنید.'
-            message = 'قدیم ها ایمیل فعال سازی می فرستادیم ولی الان شرکتش ما رو تحریم کرده (: پس راحت و بی دردسر'
-            body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: <a href=\"{}?code={}\">لینک رو به رو</a> ".format(request.build_absolute_uri('/accounts/register/'), code)
-            message = message + body
+
             context = {
                 'message': message }
             return render(request, 'index.html', context)
@@ -110,7 +104,7 @@ def register(request):
                 'message': 'متاسفانه این نام کاربری قبلا استفاده شده است. از نام کاربری دیگری استفاده کنید. ببخشید که فرم ذخیره نشده. درست می شه'}  # TODO: forgot password
             # TODO: keep the form data
             return render(request, 'register.html', context)
-    elif request.GET.has_key('code'):  # user clicked on code
+    elif 'code' in keys_get:  # user clicked on code
         code = request.GET['code']
         if Passwordresetcodes.objects.filter(
                 code=code).exists():  # if code is in temporary db, read the data and create the user
@@ -140,7 +134,8 @@ def register(request):
 @csrf_exempt
 @require_POST
 def whoami(request):
-    if request.POST.has_key('token'):
+    keys = request.POST.keys()
+    if 'token' in keys:
         this_token = request.POST['token']  # TODO: Check if there is no `token`- done-please Check it
         # Check if there is a user with this token; will retun 404 instead.
         this_user = get_object_or_404(User, token__token=this_token)
@@ -220,7 +215,7 @@ def edit_expense(request):
     this_pk = request.POST['id'] if 'id' in request.POST else "-1"
     this_token = request.POST['token'] if 'token' in request.POST else ""
     this_user = get_object_or_404(User, token__token=this_token)
-    
+
     this_expense = get_object_or_404(Expense, pk=this_pk, user=this_user)
     this_expense.text = this_text
     this_expense.amount = this_amount
@@ -232,7 +227,7 @@ def edit_expense(request):
 @csrf_exempt
 @require_POST
 def edit_income(request):
-    """ edit an income """    
+    """ edit an income """
     this_text = request.POST['text'] if 'text' in request.POST else ""
     this_amount = request.POST['amount'] if 'amount' in request.POST else "0"
     this_pk = request.POST['id'] if 'id' in request.POST else "0"
