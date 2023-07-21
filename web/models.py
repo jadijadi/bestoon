@@ -9,6 +9,9 @@ class News(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField()
     date = models.DateTimeField()
+    class Meta:
+    	verbose_name='News'
+    	verbose_name_plural='News'
     def __unicode__(self):
         return self.title
 
@@ -32,7 +35,7 @@ class Expense(models.Model):
     text = models.CharField(max_length=255)
     date = models.DateTimeField()
     amount = models.BigIntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
@@ -42,7 +45,7 @@ class Income(models.Model):
     text = models.CharField(max_length=255)
     date = models.DateTimeField()
     amount = models.BigIntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
