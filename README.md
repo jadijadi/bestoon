@@ -34,7 +34,7 @@ cd bestoon
 virtualenv -p "PATH\TO\Python.exe" build # Give Full Path To python.exe
 build\Scripts\activate # Activate The Virutal Environment
 pip install -r requirements.txt
-move bestoon\settings.py.sample bestoon/settings.py
+move bestoon\settings.py.sample bestoon\settings.py
 python manage.py migrate # Create Database Tables
 ```
 4. Run `Bestoon` using `python manage.py runserver`
@@ -52,6 +52,7 @@ The project contains two different clients (command line and an ionic app for an
 
 - [Ruby Console Clients API bestoon](http://github.com/shayanzare007/ruby-bestoon-api)
 - [Angular 2 Web Client](https://github.com/n1arash/ngBestoon)
+- [Bestoon Python Client](https://github.com/Ali-Xoerex/Pytoon)
 - [Bestoon Bash Script](https://github.com/moeinroid/Bestoon-bash-script)
 - [Bestoon Client for windows](https://github.com/BakhtiariMohammad/Bestoon-Client-for-windows)
 - [Bestoon Multiplatform Gui](https://github.com/alireza6677/BestoonGui)
