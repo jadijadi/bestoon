@@ -21,7 +21,7 @@ class Passwordresetcodes(models.Model):
 
 
 class Token(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     token = models.CharField(max_length=48)
 
     def __unicode__(self):
@@ -32,7 +32,7 @@ class Expense(models.Model):
     text = models.CharField(max_length=255)
     date = models.DateTimeField()
     amount = models.BigIntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
@@ -42,7 +42,7 @@ class Income(models.Model):
     text = models.CharField(max_length=255)
     date = models.DateTimeField()
     amount = models.BigIntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     def __unicode__(self):
         return "{}-{}-{}".format(self.date, self.user, self.amount)
